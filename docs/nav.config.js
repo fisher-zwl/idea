@@ -128,6 +128,15 @@ module.exports = [{
              });
          }
     }, {
+        key: 'component-demo-easy-table-easy-table',
+        title: 'table 数据表格easy',
+        uri: '/easy-table',
+        location: function (resolve) {
+             require.ensure([], function () {
+                 resolve(require('../components/ms-easy-table/ms-easy-table.md'));
+             });
+         }
+    },{
         key: 'component-demo-table-table',
         title: 'table 数据表格',
         uri: '/table',

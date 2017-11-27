@@ -1,5 +1,6 @@
 import './components/ms-menu';
 import './components/ms-table';
+import './components/ms-easy-table';
 import './components/ms-pagination/ms-pagination';
 import './components/ms-dialog';
 import './components/ms-form';
