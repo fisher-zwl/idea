@@ -4,7 +4,7 @@
 
 ```html
 <div :controller="table-easy" :css="{'margin-bottom':'20px'}">
-    <ms-easy-table :css="{height:'150px'}" :widget="{data:@remoteList,columns:@columns,loading:@loading,pagination:@pagination,onChange:@handleTableChange, isTitle:@isTitle}">
+    <ms-easy-table :css="{height:'150px'}" :widget="{data:@remoteList,columns:@columns,loading:@loading,pagination:@pagination,onChange:@handleTableChange,onSelect:@handleSelect, onSelectAll:@handleSelectAll, isTitle:@isTitle}">
     </ms-easy-table>
 </div>
 ```
@@ -34,7 +34,7 @@ const vm_saika = avalon.define({
         },
         {
             title:'身份',
-            dataIndex:'region_name'
+            dataIndex:'region_parent_id'
         },
         {
             title:'住处',

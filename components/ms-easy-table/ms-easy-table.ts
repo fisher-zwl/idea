@@ -71,13 +71,13 @@ avalon.component('ms-easy-table', {
         onInit: function(event) {
             var _this = this;
             // var descriptor = getChildTemplate(this);
-            // this.columns.forEach(function(column) {
-            //     if (column.needSelection) {
-            //         _this.key = column.dataIndex || _this.key;
-            //        // _this.needSelection = true;
-            //         return false;
-            //     }
-            // });
+            this.columns.forEach(function(column) {
+                if (column.needSelection) {
+                    _this.key = column.dataIndex || _this.key;
+                   // _this.needSelection = true;
+                    return false;
+                }
+            });
             this.$watch('checked.length', function(newV) {
                 var currentPageKeys = _this.data
                     .map(function(record) { return record[_this.key]; });
