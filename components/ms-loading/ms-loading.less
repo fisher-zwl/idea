@@ -1,0 +1,13 @@
+@import '../../styles/index';
+@loading-prefix-cls: ~"@{ane-prefix}-loading";
+
+.@{loading-prefix-cls}-mask {
+    position: absolute;
+    background: #ffffff;
+    filter: alpha(opacity=90);
+    opacity: .9;
+    color: #000000;
+    text-align: center;
+    z-index: 300;
+    // background:url(/loading.gif) no-repeat scroll center center transparent;
+}
