@@ -1,57 +1,55 @@
 import * as avalon from 'avalon2';
 import '../ms-checkbox/ms-checkbox';
-import './ms-table-header'
+import * as $ from 'jquery';
+import './ms-table-header';
+import './ms-table-util';
 import '../ms-pagination/ms-pagination';
 import {
     findParentComponent,
-    parseSlotToVModel,
-    getChildTemplateDescriptor
+    parseSlotToVModel
 } from '../../ane-util';
-import '../ms-loading';
-
-const defaultPagination = function () {
-    return {
-        current: 1, pageSize: 10, total: NaN, onChange: avalon.noop
-    };
-};
+// import '../ms-loading';
 
 avalon.component('ms-table', {
     soleSlot: 'header',
     template: require('./ms-table.html'),
     defaults: {
-        header: '',
         columns: [],
         data: [],
+        currentPage:1,
+        prePageSize:20,
         key: 'id',
-
         loading: false,
+        display:'none',
         needSelection: false,
         checked: [],
         selection: [],
         isAllChecked: false,
+        isTitle:false,
         onSelect: avalon.noop,
         onSelectAll: avalon.noop,
         selectionChange: avalon.noop,
-        handleCheckAll(e) {
-            const data = this.getCurrentPageData();
+        handleCheckAll: function(e) {
+            var _this = this;
+            var data = _this.data;
             if (e.target.checked) {
-                data.forEach(record => {
-                    this.checked.ensure(record[this.key]);
-                    this.selection.ensure(record);
+                data.forEach(function(record) {
+                    _this.checked.ensure(record[_this.key]);
+                    _this.selection.ensure(record);
                 });
             } else {
-                if (!isNaN(this.paginationConfig.total)) {
+                if (data.length > 0) {
                     this.checked.clear();
                     this.selection.clear();
                 } else {
-                    this.checked.removeAll(el => data.map(record => record[this.key]).indexOf(el) !== -1);
-                    this.selection.removeAll(el => data.indexOf(el) !== -1);
+                    this.checked.removeAll(function(el) { return data.map(function(record) { return record[_this.key]; }).indexOf(el) !== -1; });
+                    this.selection.removeAll(function(el) { return data.indexOf(el) !== -1; });
                 }
             }
             this.selectionChange(this.checked, this.selection.$model);
             this.onSelectAll(e.target.checked, this.selection.$model);
         },
-        handleCheck(checked, record) {
+        handleCheck: function(checked, record) {
             if (checked) {
                 this.checked.ensure(record[this.key]);
                 this.selection.ensure(record);
@@ -62,83 +60,62 @@ avalon.component('ms-table', {
             this.selectionChange(this.checked, this.selection.$model);
             this.onSelect(record.$model, checked, this.selection.$model);
         },
-
         actions: avalon.noop,
-        handle(type, col, record, $index, ...extra) {
-            let text = record[col.dataIndex].$model || record[col.dataIndex];
-            this.actions(type, text, record.$model, $index, ...extra);
-        },
-
-        pagination: defaultPagination(),
-        paginationConfig: defaultPagination(),
-        handlePageChange(currentPage) {
-            this.paginationConfig.onChange(currentPage);
-            this.paginationConfig.current = currentPage;
-
-            this.$fire('checked.length', this.checked.length);
-            this.onChange(this.paginationConfig.$model);
-        },
-        getCurrentPageData() {
-            return !isNaN(this.paginationConfig.total) ? this.data : this.data.slice(
-                this.paginationConfig.pageSize * (this.paginationConfig.current - 1),
-                this.paginationConfig.pageSize * this.paginationConfig.current
-            );
-        },
-        $computed: {
-            total() {
-                return !isNaN(this.paginationConfig.total) ? this.paginationConfig.total : this.data.length;
+        handle: function(type, col, record, $index) {
+            var extra = [];
+            for (var _i = 4; _i < arguments.length; _i++) {
+                extra[_i - 4] = arguments[_i];
             }
+            var text = record[col.dataIndex].$model || record[col.dataIndex];
+            this.actions.apply(this, [type, text, record.$model, $index].concat(extra));
         },
-
         onChange: avalon.noop,
-        onInit(event) {
-            const descriptor = getChildTemplateDescriptor(this);
-            descriptor.forEach(column => {
+        onInit: function(event) {
+            var _this = this;
+            var descriptor = getChildTemplate(this);
+            descriptor.forEach(function(column) {
                 if (column.props.type == 'selection') {
-                    this.key = column.props.dataIndex || this.key;
-                    this.needSelection = true;
+                    _this.key = column.props.dataIndex || _this.key;
+                    _this.needSelection = true;
                     return false;
                 }
             });
             this.columns = getColumnConfig(descriptor);
-            this.$watch('checked.length', (newV) => {
-                const currentPageKeys = this.getCurrentPageData()
-                    .map(record => record[this.key]);
-                this.isAllChecked = currentPageKeys
-                    .filter(key => this.checked.contains(key))
+            this.$watch('checked.length', function(newV) {
+                var currentPageKeys = _this.data
+                    .map(function(record) { return record[_this.key]; });
+                _this.isAllChecked = currentPageKeys
+                    .filter(function(key) { return _this.checked.contains(key); })
                     .length == currentPageKeys.length;
             });
-            this.$watch('data', (v) => {
-                this.isAllChecked = false;
-                this.checked.clear();
-                this.selection.clear();
+            this.$watch('data', function(v) {
+                _this.isAllChecked = false;
+                _this.checked.clear();
+                _this.selection.clear();
+                tableSaikaColumn();
             });
-            this.$watch('data.length', v => {
-                this.isAllChecked = false;
-                this.checked.clear();
-                this.selection.clear();
+            this.$watch('data.length', function(v) {
+                _this.isAllChecked = false;
+                _this.checked.clear();
+                _this.selection.clear();
+                tableSaikaColumn();
             });
-            this.$watch('pagination', v => {
-                avalon.mix(this.paginationConfig, v);
+            this.$watch('loading', function(v) {
+                if(v){
+                    this.display = 'block';
+                }else{
+                    this.display = 'none';
+                }
             });
-            this.$watch('pagination.current', v => {
-                this.paginationConfig.current = v;
-            });
-            this.$watch('pagination.pageSize', v => {
-                this.paginationConfig.pageSize = v;
-            });
-            this.$watch('pagination.total', v => {
-                this.paginationConfig.total = v;
-            });
-            this.$watch('pagination.onChange', v => {
-                this.paginationConfig.onChange = v;
-            });
-            this.$fire('pagination', this.pagination.$model);
+            tableSaikaColumn();
         },
-        onReady(event) {
+        onReady: function(event) {
+            //tableSaikaColumn();
+            $(window).resize(function(){//监测浏览器发生大小变化
+                tableSaikaColumn();
+            });
         },
-        onDispose(vm, el) {
-        }
+        onDispose: function(vm, el) {}
     }
 });
 
@@ -169,4 +146,32 @@ function getColumnConfig(descriptor, level = 1) {
         });
         return acc.concat(getColumnConfig(column.children, level + 1));
     }, []);
+}
+
+function getChildTemplate(vmodel, render = vmodel.$render): any[] {
+    if (render.directives === undefined) {
+        return [];
+    }
+    return render.directives.reduce((acc, action) => {
+        if (action.is) {
+            acc.push({
+                is: action.is,
+                props: action.value,
+                inlineTemplate: action.fragment,
+                children: getChildTemplate(vmodel, action.innerRender || { directives: [] })
+            });
+        }
+        return acc;
+    }, []);
+}
+
+function tableSaikaColumn(){
+    $(".ane-table-fixed-thead table").width($('.ane-table-fixed-tbody .table thead').width()+3);      
+    $(".ane-table-fixed-thead  table").children("thead").find("th").each(function(){ 
+        let idx = $(this).index();         
+        let td=$('.ane-table-fixed-tbody table').children('thead').find("th").eq(idx);
+        //console.log(idx+"--"+ $(this).width());
+        //console.log(idx+"++"+  td.width());
+        $(this).width(td.width());
+    }); 
 }

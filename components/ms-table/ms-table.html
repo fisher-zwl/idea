@@ -1,24 +1,41 @@
 <div>
-    <table class="table" :loading="!window.isNaN(@paginationConfig.total) && @loading">
-        <thead>
-            <tr>
-                <th :if="@needSelection">
-                    <ms-checkbox :widget="{checked:@isAllChecked,onChange:@handleCheckAll}"></ms-checkbox>
-                </th>
-                <th :for="el in @columns">{{el.title}}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr :for="($index, record) in @getCurrentPageData()">
-                <td :if="@needSelection">
-                    <ms-checkbox :widget="{checked:@checked.indexOf(record[@key])!=-1,onChange:function(){@handleCheck(arguments[0].target.checked,record)}}"></ms-checkbox>
-                </td>
-                <td :for="col in @columns" :html="col.template"></td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="pull-right">
+    <div class="ane-table">
+        <div class="ane-table-fixed-thead">
+            <table class="table table-hover tablebordered">
+                <thead>           
+                    <tr>               
+                        <th  :if="@needSelection">                  
+                            <ms-checkbox :widget="{checked:@isAllChecked,onChange:@handleCheckAll}"></ms-checkbox>               
+                        </th>                
+                        <th  :for="el in @columns">{{el.title}}</th>            
+                    </tr>      
+                </thead>  
+            </table>
+        </div>
+        <div class="ane-table-fixed-loading" :if="@loading" attr="{display:@display}">正在努力地加载数据中，请稍候……</div>
+        <div class="ane-table-fixed-tbody">
+            <table class="table table-hover table-bordered">
+                <thead>           
+                    <tr>               
+                        <th :if="@needSelection">                  
+                            <ms-checkbox :widget="{checked:@isAllChecked,onChange:@handleCheckAll}"></ms-checkbox>               
+                        </th>                
+                        <th :for="el in @columns">{{el.title}}</th>            
+                    </tr>      
+                </thead>  
+                <tbody>            
+                    <tr :for="($index, record) in @data">            
+                        <td  :if="@needSelection">                  
+                            <ms-checkbox :widget="{checked:@checked.indexOf(record[@key])!=-1,onChange:function(){@handleCheck(arguments[0].target.checked,record)}}"></ms-checkbox>               
+                        </td>             
+                        <td :for="col in @columns" :attr="@isTitle && record[col.dataIndex] ? {title:record[col.dataIndex]}:''" :html="col.template"></td>        
+                    </tr>       
+                </tbody>  
+            </table>
+        </div>
+    </div>  
+    <!-- <div class="pull-right">
         <ms-pagination :widget="{current:@paginationConfig.current,pageSize:@paginationConfig.pageSize,total:@total,onChange:@handlePageChange}"></ms-pagination>
     </div>
-    <div class="clearfix"></div>
+    <div class="clearfix"></div> -->
 </div>

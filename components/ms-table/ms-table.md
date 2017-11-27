@@ -1,10 +1,57 @@
 ## 数据表格
 
+### 远程分页表格测试(saika)
+
+```html
+<div :controller="table-saika" :css="{'margin-bottom':'20px'}">
+    <ms-table :css="{height:'150px'}" :widget="{data:@remoteList,loading:@loading,pagination:@pagination,onChange:@handleTableChange, isTitle:@isTitle}">
+        <ms-table-header :widget="{dataIndex:'region_id',type:'selection'}"></ms-table-header>
+        <ms-table-header :widget="{title:'地区',dataIndex:'region_name'}"></ms-table-header>
+        <ms-table-header :widget="{title:'PID',dataIndex:'region_parent_id'}"></ms-table-header>
+    </ms-table>
+</div>
+```
+
+```js
+import * as avalon from 'avalon2';
+import * as $ from 'jquery';
+import { message } from 'ane';
+
+const vm_saika = avalon.define({
+    $id: 'table-saika',
+    remoteList: [],
+    loading: false,
+    isTitle:true,
+    pagination: {
+        pageSize: 6, total: 0
+    },
+    fetch(params = {}) {
+        vm_saika.loading = true;
+        $.getJSON('http://easy-mock.com/mock/58ff1b7c5e43ae5dbea5eff3/api/demo', params).then(data => {
+            vm_saika.pagination.total = data.total;
+            data.rows[0].region_parent_id = Date.now();
+            vm_saika.remoteList = data.rows;
+            vm_saika.loading = false;
+        });
+    },
+    handleTableChange(pagination) {
+        if (this.pagination.hasOwnProperty('current')) {
+            vm_saika.pagination.current = pagination.current;
+        }
+        this.fetch({
+            start: pagination.pageSize * (pagination.current - 1),
+            limit: pagination.pageSize
+        });
+    }
+});
+vm_saika.fetch();
+```
+
 ### 本地分页
 
 ```html
 <div :controller="doc-table-local">
-    <ms-table :widget="{data:@list,actions:@actions,onSelect:@handleSelect,onSelectAll:@handleSelectAll,selectionChange:@handleSelectionChange}">
+    <ms-table :css="{height:'400px'}" :widget="{data:@list,actions:@actions,onSelect:@handleSelect,onSelectAll:@handleSelectAll,selectionChange:@handleSelectionChange}">
         <ms-table-header :widget="{dataIndex:'id',type:'selection'}"></ms-table-header>
         <ms-table-header :widget="{title:'序号',type:'index'}"></ms-table-header>
         <ms-table-header :widget="{title:'地址',dataIndex:'address'}"></ms-table-header>
@@ -51,7 +98,7 @@ const vm = avalon.define({
 
 ```html
 <div :controller="doc-table-remote">
-    <ms-table :widget="{data:@remoteList,loading:@loading,pagination:@pagination,onChange:@handleTableChange}">
+    <ms-table :css="{height:'200px'}" :widget="{data:@remoteList,loading:@loading,pagination:@pagination,onChange:@handleTableChange}">
         <ms-table-header :widget="{dataIndex:'region_id',type:'selection'}"></ms-table-header>
         <ms-table-header :widget="{title:'地区',dataIndex:'region_name'}"></ms-table-header>
         <ms-table-header :widget="{title:'PID',dataIndex:'region_parent_id'}"></ms-table-header>
@@ -100,6 +147,7 @@ vm1.fetch();
 | columns | 表格列定义 | {title:string,dataIndex:string,template:string}\[\] | \[\] |
 | data | 表格数据 | any\[\] | \[\] |
 | key | 数据行的唯一标识字段 | string | 'id' |
+| isTitle | 表格td的title是否作用标志 | boolean | false|
 | loading | 数据是否正在加载中 | boolean | false |
 | needSelection | 是否需要选择数据行 | boolean | false |
 | actions | handle方法被调用后，这个方法就会被调用 | function(type:string,text:string,record,index:number,...extra) | noop |
