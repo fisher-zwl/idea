@@ -41,7 +41,7 @@
                                 {{record[col.dataIndex]}}
                             </span>
                             <span :if="col.needSelection">
-                                <ms-checkbox :widget="{checked:@checked.indexOf(record)!=-1,onChange:function(){@handleCheck(arguments[0].target.checked,record)}}"></ms-checkbox>
+                                <ms-checkbox :widget="{checked:@checked.indexOf(record[@key])!=-1,onChange:function(){@handleCheck(arguments[0].target.checked,record)}}"></ms-checkbox>
                             </span>
                         </td>        
                     </tr>       

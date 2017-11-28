@@ -75,7 +75,7 @@ vm_saika.fetch();
 
 | 参数 | 说明 | 类型 | 默认值 |
 |-----|-----|-----|-----|
-| columns | 表格列定义 | {title:string,dataIndex:string,template:string}\[\] | \[\] |
+| columns | 表格表头定义 | {title:string,dataIndex:string,needSelection:boolean}\[\] | \[\] |
 | data | 表格数据 | any\[\] | \[\] |
 | key | 数据行的唯一标识字段 | string | 'id' |
 | isTitle | 表格td的title是否作用标志 | boolean | false|

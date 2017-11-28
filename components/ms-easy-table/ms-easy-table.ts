@@ -70,11 +70,9 @@ avalon.component('ms-easy-table', {
         onChange: avalon.noop,
         onInit: function(event) {
             var _this = this;
-            // var descriptor = getChildTemplate(this);
             this.columns.forEach(function(column) {
-                if (column.needSelection) {
+                if (column.needSelection) {//返回选择项的字段
                     _this.key = column.dataIndex || _this.key;
-                   // _this.needSelection = true;
                     return false;
                 }
             });
@@ -107,7 +105,6 @@ avalon.component('ms-easy-table', {
             tableSaikaColumn();
         },
         onReady: function(event) {
-            //tableSaikaColumn();
             $(window).resize(function(){//监测浏览器发生大小变化
                 tableSaikaColumn();
             });
@@ -120,8 +117,6 @@ function tableSaikaColumn(){
     $(".ane-table-fixed-thead  table").children("thead").find("th").each(function(){ 
         let idx = $(this).index();         
         let td=$('.ane-table-fixed-tbody table').children('thead').find("th").eq(idx);
-        //console.log(idx+"--"+ $(this).width());
-        //console.log(idx+"++"+  td.width());
         $(this).width(td.width());
     }); 
 }
