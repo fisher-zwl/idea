@@ -3,10 +3,7 @@
         <div class="ane-table-fixed-thead">
             <table class="table table-hover tablebordered">
                 <thead>           
-                    <tr>               
-                        <!-- <th  :if="@needSelection">                  
-                            <ms-checkbox :widget="{checked:@isAllChecked,onChange:@handleCheckAll}"></ms-checkbox>               
-                        </th>                 -->
+                    <tr :if="!@isTitleRows">             
                         <th  :for="el in @columns">
                             <span :if="!el.needSelection">
                                 {{el.title}}
@@ -15,15 +12,30 @@
                                 <ms-checkbox :widget="{checked:@isAllChecked,onChange:@handleCheckAll}"></ms-checkbox> 
                             </span>
                         </th>            
+                    </tr>
+                    <tr :if="@isTitleRows">
+                        <th  :for="el in @titleRows[0]" :attr="{rowspan:el.rowspan,colspan:el.colspan}">
+                            <span :if="!el.needSelection">
+                                {{el.title}}
+                            </span>
+                            <span :if="el.needSelection">
+                                <ms-checkbox :widget="{checked:@isAllChecked,onChange:@handleCheckAll}"></ms-checkbox> 
+                            </span>
+                        </th>
+                    </tr>
+                    <tr :if="@isTitleRows">
+                        <th  :for="el in @titleRows[1]" :attr="{rowspan:el.rowspan,colspan:el.colspan}">
+                            {{el.title}}
+                        </th>
                     </tr>      
                 </thead>  
             </table>
         </div>
         <div class="ane-table-fixed-loading" :if="@loading" attr="{display:@display}">正在努力地加载数据中，请稍候……</div>
-        <div class="ane-table-fixed-tbody">
-            <table class="table table-hover table-bordered">
+        <div class="ane-table-fixed-tbody" :css="{top:@theadHeight}">
+            <table class="table table-hover table-bordered" :css="{marginTop:-@theadHeight}">
                 <thead>           
-                    <tr>               
+                    <tr :if="!@isTitleRows">               
                        <th  :for="el in @columns">
                             <span :if="!el.needSelection">
                                 {{el.title}}
@@ -32,6 +44,21 @@
                                 <ms-checkbox :widget="{checked:@isAllChecked,onChange:@handleCheckAll}"></ms-checkbox> 
                             </span>
                         </th>       
+                    </tr>
+                    <tr :if="@isTitleRows">
+                        <th  :for="el in @titleRows[0]" :attr="{rowspan:el.rowspan,colspan:el.colspan}">
+                            <span :if="!el.needSelection">
+                                {{el.title}}
+                            </span>
+                            <span :if="el.needSelection">
+                                <ms-checkbox :widget="{checked:@isAllChecked,onChange:@handleCheckAll}"></ms-checkbox> 
+                            </span>
+                        </th>
+                    </tr>
+                    <tr :if="@isTitleRows">
+                        <th  :for="el in @titleRows[1]" :attr="{rowspan:el.rowspan,colspan:el.colspan}">
+                            {{el.title}}
+                        </th>
                     </tr>      
                 </thead>  
                 <tbody>            

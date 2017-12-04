@@ -16,10 +16,13 @@ avalon.component('ms-easy-table', {
         data: [],
         currentPage:1,
         prePageSize:20,
+        theadHeight:32,
         key: 'id',
         loading: false,
         display:'none',
         needSelection: false,
+        titleRows:[],//表头行标题
+        isTitleRows:false,//表头titleRows是否有值
         checked: [],
         selection: [],
         isAllChecked: false,
@@ -113,10 +116,10 @@ avalon.component('ms-easy-table', {
     }
 });
 function tableSaikaColumn(){
-    $(".ane-table-fixed-thead table").width($('.ane-table-fixed-tbody .table thead').width()+3);      
-    $(".ane-table-fixed-thead  table").children("thead").find("th").each(function(){ 
+    $(".ane-table-fixed-thead table").width($('.ane-table-fixed-tbody .table thead').width()+3);
+    $(".ane-table-fixed-thead  table thead").children("thead").find('tr').find("th").each(function(){ 
         let idx = $(this).index();         
-        let td=$('.ane-table-fixed-tbody table').children('thead').find("th").eq(idx);
+        let td=$('.ane-table-fixed-tbody table').children('thead').find('tr').find("th").eq(idx);
         $(this).width(td.width());
     }); 
 }
