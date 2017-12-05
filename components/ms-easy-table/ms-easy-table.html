@@ -58,10 +58,16 @@
                 <tbody>            
                     <tr :for="($index, record) in @data">           
                         <td :for="col in @columns">
-                            <span :if="!col.needSelection" :html="col.template ? col.template : record[col.dataIndex]"> </span>
-                            <span :if="col.needSelection">
+                            <span :if="col.type!='select' && col.type!='index' && col.type!='operation'"> 
+                                {{record[col.dataIndex] ? record[col.dataIndex] : '-'}}
+                            </span>
+                            <span :if="(col.type=='select')">
                                 <ms-checkbox :widget="{checked:@checked.indexOf(record[@key])!=-1,onChange:function(){@handleCheck(arguments[0].target.checked,record)}}"></ms-checkbox>
                             </span>
+                            <span :if="(col.type=='index')">
+                                {{$index+1}}
+                            </span>
+                            <span :if="(col.type=='operation')" :html="col.template ? col.template : '-'"></span>
                         </td>        
                     </tr>       
                 </tbody>  

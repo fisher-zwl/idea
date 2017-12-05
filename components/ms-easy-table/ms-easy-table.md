@@ -118,12 +118,13 @@ const vm_saika = avalon.define({
     },
     columns:[
         {
-            needSelection:true,
             dataIndex:'region_id',
             title:'',
+            type:'select'
         },
         {
-            title:'序号'
+            title:'序号',
+            type:'index'
         },
         {
             title:'姓名555555',
@@ -139,6 +140,7 @@ const vm_saika = avalon.define({
         },
         {
             title:'操作',
+            type:'operation',
             dataIndex:'region_id',
             template:'<a :click="@handle(\'delete\', col, record, $index)">删除</a>'
                 +'<a :click="@handle(\'edit\', col, record, $index)">编辑</a>'
