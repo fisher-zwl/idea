@@ -4,7 +4,11 @@
 
 ```html
 <div :controller="table-easy-titleRows" :css="{'margin-bottom':'20px'}">
-    <ms-easy-table :css="{height:'150px'}" :widget="{data:@remoteList,columns:@columns,loading:@loading,pagination:@pagination,onChange:@handleTableChange,onSelect:@handleSelect, onSelectAll:@handleSelectAll, isTitle:@isTitle,titleRows:@titleRows,isTitleRows:@isTitleRows,theadHeight:@theadHeight}">
+    <ms-easy-table :css="{height:'150px'}" 
+
+:widget="{data:@remoteList,columns:@columns,loading:@loading,pagination:@pagination,onChange:@handleTableChange,onSelect:@handleSelect, 
+
+onSelectAll:@handleSelectAll, isTitle:@isTitle,titleRows:@titleRows,isTitleRows:@isTitleRows,theadHeight:@theadHeight}">
     </ms-easy-table>
 </div>
 ```
@@ -20,7 +24,7 @@ const vm_saika_titleRows = avalon.define({
     loading: false,
     isTitle:true,
     isTitleRows:true,
-    theadHeight:64,
+    theadHeight:62,
     pagination: {
         pageSize: 6, total: 0
     },
@@ -56,7 +60,7 @@ const vm_saika_titleRows = avalon.define({
             {fields: ['region_name'], title: '姓名', titleAlign: 'center'},
             {fields: ['region_parent_id'], title: '身份', titleAlign: 'center'},
             {fields: ['region_enble'], title: '住处', titleAlign: 'center'}
-        ]
+        ],
     ],
     fetch(params = {}) {
         vm_saika_titleRows.loading = true;
@@ -84,4 +88,104 @@ const vm_saika_titleRows = avalon.define({
     }
 });
 vm_saika_titleRows.fetch();
+```
+
+### 远程分页表格测试(easy)
+
+```html
+<div :controller="table-easy" :css="{'margin-bottom':'20px'}">
+    <ms-easy-table :css="{height:'150px'}" 
+
+:widget="{data:@remoteList,columns:@columns,actions:@actions,loading:@loading,pagination:@pagination,onChange:@handleTableChange,onSelect:@handleSelect, 
+
+onSelectAll:@handleSelectAll, isTitle:@isTitle}">
+    </ms-easy-table>
+</div>
+```
+
+```js
+import * as avalon from 'avalon2';
+import * as $ from 'jquery';
+import { message } from 'ane';
+
+const vm_saika = avalon.define({
+    $id: 'table-easy',
+    remoteList: [],
+    loading: false,
+    isTitle:true,
+    pagination: {
+        pageSize: 6, total: 0
+    },
+    columns:[
+        {
+            needSelection:true,
+            dataIndex:'region_id',
+            title:'',
+        },
+        {
+            title:'序号'
+        },
+        {
+            title:'姓名555555',
+            dataIndex:'region_name'
+        },
+        {
+            title:'身份',
+            dataIndex:'region_parent_id'
+        },
+        {
+            title:'住处',
+            dataIndex:'region_name'
+        },
+        {
+            title:'操作',
+            dataIndex:'region_id',
+            template:'<a :click="@handle(\'delete\', col, record, $index)">删除</a>'
+                +'<a :click="@handle(\'edit\', col, record, $index)">编辑</a>'
+                +'<a :click="@handle(\'check\', col, record, $index)">查看</a>'
+        }
+    ],
+    fetch(params = {}) {
+        vm_saika.loading = true;
+        $.getJSON('https://easy-mock.com/mock/58ff1b7c5e43ae5dbea5eff3/api/demo', params).then(data => {
+            // vm_saika.pagination.total = data.total;
+            data.rows[0].region_parent_id = Date.now();
+            vm_saika.remoteList = data.rows;
+            vm_saika.loading = false;
+        });
+    },
+    handleSelect(record, selected, selectedRows) {
+        console.log(record, selected, selectedRows);
+    },
+    handleSelectAll(selected, selectedRows) {
+        console.log(selected, selectedRows);
+    },
+    actions(type, text, record, index) {
+        if (type == 'delete') {
+            message.success({
+                content: '删除成功'
+            });
+        }
+        if (type == 'edit') {
+            message.success({
+                content: '编辑成功'
+            });
+        }
+        if (type == 'check') {
+            message.success({
+                content: '查看数据成功'
+            });
+        }
+    },
+    handleTableChange(pagination) {
+        if (this.pagination.hasOwnProperty('current')) {
+            vm_saika.pagination.current = pagination.current;
+        }
+        this.fetch({
+            start: pagination.pageSize * (pagination.current - 1),
+            limit: pagination.pageSize
+        });
+    }
+});
+vm_saika.fetch();
 ```

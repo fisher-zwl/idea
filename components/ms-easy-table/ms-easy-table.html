@@ -2,9 +2,9 @@
     <div class="ane-table">
         <div class="ane-table-fixed-thead">
             <table class="table table-hover tablebordered">
-                <thead>           
-                    <tr :if="!@isTitleRows">             
-                        <th  :for="el in @columns">
+                <thead :if="!@isTitleRows">           
+                    <tr>             
+                        <th  :for="el in @columns" class="ane-table-th">
                             <span :if="!el.needSelection">
                                 {{el.title}}
                             </span>
@@ -12,9 +12,11 @@
                                 <ms-checkbox :widget="{checked:@isAllChecked,onChange:@handleCheckAll}"></ms-checkbox> 
                             </span>
                         </th>            
-                    </tr>
-                    <tr :if="@isTitleRows">
-                        <th  :for="el in @titleRows[0]" :attr="{rowspan:el.rowspan,colspan:el.colspan}">
+                    </tr>   
+                </thead> 
+                <thead :if="@isTitleRows">
+                    <tr  :for="($index, record) in @titleRows">
+                        <th  :for="el in record" :attr="{rowspan:el.rowspan,colspan:el.colspan}" class="ane-table-th">
                             <span :if="!el.needSelection">
                                 {{el.title}}
                             </span>
@@ -22,21 +24,16 @@
                                 <ms-checkbox :widget="{checked:@isAllChecked,onChange:@handleCheckAll}"></ms-checkbox> 
                             </span>
                         </th>
-                    </tr>
-                    <tr :if="@isTitleRows">
-                        <th  :for="el in @titleRows[1]" :attr="{rowspan:el.rowspan,colspan:el.colspan}">
-                            {{el.title}}
-                        </th>
                     </tr>      
-                </thead>  
+                </thead> 
             </table>
         </div>
         <div class="ane-table-fixed-loading" :if="@loading" attr="{display:@display}">正在努力地加载数据中，请稍候……</div>
         <div class="ane-table-fixed-tbody" :css="{top:@theadHeight}">
             <table class="table table-hover table-bordered" :css="{marginTop:-@theadHeight}">
-                <thead>           
-                    <tr :if="!@isTitleRows">               
-                       <th  :for="el in @columns">
+                <thead :if="!@isTitleRows">           
+                    <tr>               
+                       <th  :for="el in @columns" class="ane-table-th">
                             <span :if="!el.needSelection">
                                 {{el.title}}
                             </span>
@@ -44,9 +41,11 @@
                                 <ms-checkbox :widget="{checked:@isAllChecked,onChange:@handleCheckAll}"></ms-checkbox> 
                             </span>
                         </th>       
-                    </tr>
-                    <tr :if="@isTitleRows">
-                        <th  :for="el in @titleRows[0]" :attr="{rowspan:el.rowspan,colspan:el.colspan}">
+                    </tr>     
+                </thead>
+                <thead :if="@isTitleRows">
+                    <tr :for="($index, record) in @titleRows">
+                        <th  :for="el in record" :attr="{rowspan:el.rowspan,colspan:el.colspan}" class="ane-table-th">
                             <span :if="!el.needSelection">
                                 {{el.title}}
                             </span>
@@ -54,19 +53,12 @@
                                 <ms-checkbox :widget="{checked:@isAllChecked,onChange:@handleCheckAll}"></ms-checkbox> 
                             </span>
                         </th>
-                    </tr>
-                    <tr :if="@isTitleRows">
-                        <th  :for="el in @titleRows[1]" :attr="{rowspan:el.rowspan,colspan:el.colspan}">
-                            {{el.title}}
-                        </th>
                     </tr>      
                 </thead>  
                 <tbody>            
                     <tr :for="($index, record) in @data">           
                         <td :for="col in @columns">
-                            <span :if="!col.needSelection">
-                                {{record[col.dataIndex]}}
-                            </span>
+                            <span :if="!col.needSelection" :html="col.template ? col.template : record[col.dataIndex]"> </span>
                             <span :if="col.needSelection">
                                 <ms-checkbox :widget="{checked:@checked.indexOf(record[@key])!=-1,onChange:function(){@handleCheck(arguments[0].target.checked,record)}}"></ms-checkbox>
                             </span>

@@ -96,7 +96,7 @@ avalon.component('ms-easy-table', {
                 _this.isAllChecked = false;
                 _this.checked.clear();
                 _this.selection.clear();
-                tableSaikaColumn();
+                //tableSaikaColumn();
             });
             this.$watch('loading', function(v) {
                 if(v){
@@ -105,7 +105,7 @@ avalon.component('ms-easy-table', {
                     this.display = 'none';
                 }
             });
-            tableSaikaColumn();
+            //tableSaikaColumn();
         },
         onReady: function(event) {
             $(window).resize(function(){//监测浏览器发生大小变化
@@ -116,10 +116,11 @@ avalon.component('ms-easy-table', {
     }
 });
 function tableSaikaColumn(){
-    $(".ane-table-fixed-thead table").width($('.ane-table-fixed-tbody .table thead').width()+3);
-    $(".ane-table-fixed-thead  table thead").children("thead").find('tr').find("th").each(function(){ 
-        let idx = $(this).index();         
-        let td=$('.ane-table-fixed-tbody table').children('thead').find('tr').find("th").eq(idx);
-        $(this).width(td.width());
-    }); 
+    $(".ane-table-fixed-thead .table").width($('.ane-table-fixed-tbody .table').width()+2);      
+    $(".ane-table-fixed-thead .ane-table-th").each(function(index){         
+        let td=$('.ane-table-fixed-tbody .ane-table-th').eq(index);
+        $(this).find('span').width(td.width());
+        $(this).find('span').height(td.height()-2);
+        $(this).find('span').css('line-height',(td.height()-2)+'px');
+    });
 }
