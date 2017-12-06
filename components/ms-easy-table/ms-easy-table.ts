@@ -9,7 +9,7 @@ import {
 } from '../../ane-util';
 // import '../ms-loading';
 
-avalon.component('ms-easy-table', {
+let easyTable = avalon.component('ms-easy-table', {
     template: require('./ms-easy-table.html'),
     defaults: {
         columns: [],
@@ -25,6 +25,7 @@ avalon.component('ms-easy-table', {
         isTitleRows:false,//表头titleRows是否有值
         maxWidth:2000,//tb最大宽度
         clickBg:1000,
+        isClick:false,//是否触发点击事件
         checked: [],
         selection: [],
         isAllChecked: false,
@@ -126,7 +127,8 @@ avalon.component('ms-easy-table', {
     }
 });
 function tableSaikaColumn(){
-    $(".ane-table-fixed-thead .table").width($('.ane-table-fixed-tbody .table').width()+2);      
+    $(".ane-table-fixed-thead .table").width($('.ane-table-fixed-tbody .table').width()+2);
+    easyTable.theadHeight = $('.ane-table-fixed-tbody .table thead').height();  
     $(".ane-table-fixed-thead .ane-table-th").each(function(index){         
         let td=$('.ane-table-fixed-tbody .ane-table-th').eq(index);
         $(this).find('span').width(td.width());

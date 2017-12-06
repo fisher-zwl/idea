@@ -28,7 +28,6 @@
                 </thead> 
             </table>
         </div>
-        <div class="ane-table-fixed-loading" :if="@loading" attr="{display:@display}">正在努力地加载数据中，请稍候……</div>
         <div class="ane-table-fixed-tbody" :css="{top:@theadHeight}">
             <table class="table table-hover table-bordered" :css="{marginTop:-@theadHeight}">
                 <thead :if="!@isTitleRows">           
@@ -55,11 +54,12 @@
                         </th>
                     </tr>      
                 </thead>  
-                <tbody>            
-                    <tr :for="($index, record) in @data" :click="@tableClick($index,record)" :class="(@clickBg == $index) && 'table-click'">           
+                <tbody>
+                    <div class="ane-table-fixed-loading" :if="@loading" attr="{display:@display}"><span class="loadingSpan">结果加载中</span></div>            
+                    <tr :for="($index, record) in @data" :click="@isClick ? @tableClick($index,record):''" :class="(@clickBg == $index) && 'table-click'">           
                         <td :for="col in @columns">
                             <div :css="{maxWidth:@maxWidth}">
-                                <span :if="col.type!='select' && col.type!='index' && col.type!='operation'"> 
+                                <span :if="col.type!='select' && col.type!='index' && col.type!='operation'" :attr="@isTitle && record[col.dataIndex] ? {title:record[col.dataIndex]}:''"> 
                                     {{record[col.dataIndex] ? record[col.dataIndex] : '-'}}
                                 </span>
                                 <span :if="(col.type=='select')">

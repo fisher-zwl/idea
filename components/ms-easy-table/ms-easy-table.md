@@ -94,7 +94,7 @@ vm_saika_titleRows.fetch();
 
 ```html
 <div :controller="table-easy" :css="{'margin-bottom':'20px'}">
-    <ms-easy-table :css="{height:'150px'}" :widget="{data:@remoteList,columns:@columns,actions:@actions,onSelect:@handleSelect, onSelectAll:@handleSelectAll, isTitle:@isTitle,onClick:@onClick}">
+    <ms-easy-table :css="{height:'150px'}" :widget="{data:@remoteList,columns:@columns,actions:@actions,onSelect:@handleSelect, onSelectAll:@handleSelectAll, isTitle:@isTitle,onClick:@onClick,loading:@loading,isClick:@isClick}">
     </ms-easy-table>
     <ms-page :widget="{total:@total,onChange:@handlePageChange,current:@current,pageSize:@pageSize,pageClassName:@pageClassName,getCurrent:@getCurrent}"></ms-page>
 </div>
@@ -110,6 +110,7 @@ const vm_saika = avalon.define({
     remoteList: [],
     loading: false,
     isTitle:true,
+    isClick:true,//是否触发点击事件
     total:0,
     current:1,
     pageSize:10,
@@ -153,7 +154,7 @@ const vm_saika = avalon.define({
     },
     fetch(params) {
         params.page = this.current;
-        //vm_saika.loading = true;
+        vm_saika.loading = true;
         $.getJSON('https://easy-mock.com/mock/58ff1b7c5e43ae5dbea5eff3/api/demo', params).then(data => {
             // vm_saika.pagination.total = data.total;
             data.rows[0].region_parent_id = Date.now();
