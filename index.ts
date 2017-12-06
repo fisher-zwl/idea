@@ -2,6 +2,7 @@ import './components/ms-menu';
 import './components/ms-table';
 import './components/ms-easy-table';
 import './components/ms-pagination/ms-pagination';
+import './components/ms-page/ms-page';
 import './components/ms-dialog';
 import './components/ms-form';
 export { createForm } from './components/ms-form/create-form';

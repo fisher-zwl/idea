@@ -23,6 +23,8 @@ avalon.component('ms-easy-table', {
         needSelection: false,
         titleRows:[],//表头行标题
         isTitleRows:false,//表头titleRows是否有值
+        maxWidth:2000,//tb最大宽度
+        clickBg:1000,
         checked: [],
         selection: [],
         isAllChecked: false,
@@ -71,6 +73,12 @@ avalon.component('ms-easy-table', {
             this.actions.apply(this, [type, text, record.$model, $index].concat(extra));
         },
         onChange: avalon.noop,
+        tableClick(index , record){
+            this.clickBg = index;
+            this.onClick(index,record.$model);
+            return false;
+        },
+        onClick: avalon.noop,
         onInit: function(event) {
             var _this = this;
             this.columns.forEach(function(column) {
@@ -90,12 +98,14 @@ avalon.component('ms-easy-table', {
                 _this.isAllChecked = false;
                 _this.checked.clear();
                 _this.selection.clear();
+                _this.clickBg  = 1000;
                 tableSaikaColumn();
             });
             this.$watch('data.length', function(v) {
                 _this.isAllChecked = false;
                 _this.checked.clear();
                 _this.selection.clear();
+                _this.clickBg  = 1000;
                 //tableSaikaColumn();
             });
             this.$watch('loading', function(v) {
