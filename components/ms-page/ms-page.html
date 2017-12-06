@@ -1,0 +1,7 @@
+<div :class="@pageClassName" class="ane-page" >
+    <span class="ane-page-span">每页{{pageSize}}条，共</span>
+    <span class="ane-page-span">{{total}}条记录 </span>
+    <span  class="btn prev" :class="@current == 1 && 'disabeld'" :click="@prevPage">上一页</span>
+    <a href="javascript:void(0)">{{current}}/{{pageTotal}}</a>
+    <span  class="btn next" :class="@current == @pageTotal && 'disabeld'" :click="@nextPage">下一页</span>
+</div>

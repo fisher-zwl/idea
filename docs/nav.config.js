@@ -155,6 +155,15 @@ module.exports = [{
              });
          }
     }, {
+        key: 'component-demo-page-page',
+        title: 'page 分页',
+        uri: '/page',
+        location: function (resolve) {
+             require.ensure([], function () {
+                 resolve(require('../components/ms-page/ms-page.md'));
+             });
+         }
+    }, {
         key: 'component-demo-tree-tree',
         title: 'tree 树',
         uri: '/tree',

@@ -1,0 +1,34 @@
+@import '../../styles/index';
+@select-prefix-cls: ~"@{ane-prefix}-page";
+
+.@{select-prefix-cls} {
+    .ane-page-span{
+        vertical-align: middle;
+        display: inline-block;
+    }
+    span.btn{
+        background:#0078d7;
+        color: #fff;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 0;
+    }
+    span.btn:hover{
+        background: #0057a1;
+    }
+    .btn.disabeld{
+        cursor: not-allowed;
+        background: #d4d7d9;
+    }
+    .btn.disabeld:hover{
+        background: #d4d7d9;
+    }
+    .prev{
+        margin:0 8px;
+    }
+    a{
+        margin-right:8px;
+        color:#0A5DA5;
+        vertical-align: middle;
+    }
+}
