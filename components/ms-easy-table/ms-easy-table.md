@@ -110,7 +110,7 @@ const vm_saika = avalon.define({
     remoteList: [],
     loading: false,
     isTitle:true,
-    isClick:true,//是否触发点击事件
+    //isClick:true,//是否触发点击事件
     total:0,
     current:1,
     pageSize:10,

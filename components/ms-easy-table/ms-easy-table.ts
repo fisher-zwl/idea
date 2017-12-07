@@ -82,7 +82,7 @@ let easyTable = avalon.component('ms-easy-table', {
         onInit: function(event) {
             var _this = this;
             this.columns.forEach(function(column) {
-                if (column.needSelection) {//返回选择项的字段
+                if (column.type == 'select') {//返回选择项的字段
                     _this.key = column.dataIndex || _this.key;
                     return false;
                 }
@@ -99,6 +99,11 @@ let easyTable = avalon.component('ms-easy-table', {
                 _this.checked.clear();
                 _this.selection.clear();
                 _this.clickBg  = 1000;
+                _this.data.forEach(function(column){
+                    _this.columns.forEach(function(val){
+                        column[val.dataIndex] = column[val.dataIndex] ? column[val.dataIndex]:'-';
+                    });
+                });
                 tableSaikaColumn();
             });
             this.$watch('data.length', function(v) {
