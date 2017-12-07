@@ -4,12 +4,13 @@
     position: relative;
     height: 100%;
     margin-bottom: 5px;
-    border-top: 1px solid #E8EDF1;
-    border-left: 1px solid #E8EDF1;
-    border-right: 1px solid #E8EDF1;
-    border-bottom: 1px solid #E8EDF1;
+    border: 0px;
+    // border-top: 1px solid #E8EDF1;
+    // border-left: 1px solid #E8EDF1;
+    // border-right: 1px solid #E8EDF1;
+    // border-bottom: 1px solid #E8EDF1;
 
-    &.@{table-prefix-cls}-fixed-thead {
+    .ane-table-fixed-thead {
         height: auto;
 
         .table{
@@ -17,8 +18,8 @@
 
             thead tr th{
                 padding: 0px;
-                line-height: 30px;
-                vertical-align: center;
+                vertical-align: middle;
+                line-height: 33px;
                 border-width: 0px 1px 1px 0;
                 border-style: solid;
                 border-color: #B7C3CA;
@@ -28,23 +29,25 @@
         }
     }
 
-    &-fixed-tbody{
+    .ane-table-fixed-tbody{
         position: absolute;
         width: 100%;
-        top: 32px;
+        top: 34px;
         bottom: 0px;
         overflow-x: hidden;
         overflow-y: auto;
+        border-width: 0 1px 1px 1px;
+        border-color: #E5EAEF;
+        border-style: solid;
 
         .table{
-            margin-top: -32px;
+            margin-top: -34px;
             margin-bottom: 0px;
 
             tbody{
                 cursor: pointer;
 
                 tr td{
-                    max-width: 90px;
                     border-color: #E5EAEF;
                     font-family: "Microsoft YaHei";
                     color: #586A7B;
@@ -52,7 +55,8 @@
                     vertical-align: middle;
                     /* word-wrap:break-word;需要换行可自行在自己css表填写该属性 */
                     padding: 0px;
-                    line-height: 30px;
+                    line-height: 32px;
+                    height: 33px;
                     text-align: center;
                     border-width: 0px 1px 1px 0;
                     border-style: solid;
@@ -64,14 +68,13 @@
 
     .table > thead{
         background-color: #E0E7ED;
-        border-width: 1px 1px 0px 1px;
+        // border-width: 1px 1px 0px 1px;
         border-style: solid;
         background-color: #F7F7F7;
     }
     .table>thead>tr>th {
         padding: 0px;
-        line-height: 30px;
-        vertical-align: center;
+        vertical-align: middle;
         border-width: 0px 1px 1px 0;
         border-style: solid;
         border-color: #B7C3CA;
@@ -89,7 +92,7 @@
         display: block;
     }
 
-    &-fixed-loading{
+    .ane-table-fixed-loading{
         position: absolute;
         left: 0;
         right: 0;
@@ -123,7 +126,7 @@
     }
 
 }
-.ane-table  .table tr th, .ane-table .table > thead:first-child > tr:first-child > th {
-    text-align: center;
-    border: 1px solid rgb(165, 180, 189);
-}
+// .ane-table  .table tr th, .ane-table .table > thead:first-child > tr:first-child > th {
+//     text-align: center;
+//     border: 1px solid rgb(165, 180, 189);
+// }

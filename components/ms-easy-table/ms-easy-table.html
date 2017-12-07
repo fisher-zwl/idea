@@ -1,7 +1,7 @@
 <div>
     <div class="ane-table">
         <div class="ane-table-fixed-thead">
-            <table class="table table-hover tablebordered">
+            <table class="table table-hover" :css="{heigth:@theadHeight}">
                 <thead :if="!@isTitleRows">           
                     <tr>             
                         <th  :for="el in @columns" class="ane-table-th">
@@ -29,7 +29,7 @@
             </table>
         </div>
         <div class="ane-table-fixed-tbody" :css="{top:@theadHeight}">
-            <table class="table table-hover table-bordered" :css="{marginTop:-@theadHeight}">
+            <table class="table table-hover" :css="{marginTop:-@theadHeight}">
                 <thead :if="!@isTitleRows">           
                     <tr>               
                        <th  :for="el in @columns" class="ane-table-th">

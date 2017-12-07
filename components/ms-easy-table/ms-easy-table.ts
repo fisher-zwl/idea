@@ -1,7 +1,6 @@
 import * as avalon from 'avalon2';
 import '../ms-checkbox/ms-checkbox';
 import * as $ from 'jquery';
-import './ms-easy-table-util';
 import '../ms-pagination/ms-pagination';
 import {
     findParentComponent,
@@ -16,7 +15,7 @@ let easyTable = avalon.component('ms-easy-table', {
         data: [],
         currentPage:1,
         prePageSize:20,
-        theadHeight:32,
+        theadHeight:34,
         key: 'id',
         loading: false,
         display:'none',
@@ -127,12 +126,12 @@ let easyTable = avalon.component('ms-easy-table', {
     }
 });
 function tableSaikaColumn(){
-    $(".ane-table-fixed-thead .table").width($('.ane-table-fixed-tbody .table').width()+2);
-    easyTable.theadHeight = $('.ane-table-fixed-tbody .table thead').height();  
+    $(".ane-table-fixed-thead .table").width($('.ane-table-fixed-tbody').width()+2);
+    $(".ane-table-fixed-tbody .table").width($('.ane-table-fixed-tbody').width());
     $(".ane-table-fixed-thead .ane-table-th").each(function(index){         
         let td=$('.ane-table-fixed-tbody .ane-table-th').eq(index);
-        $(this).find('span').width(td.width());
-        $(this).find('span').height(td.height()-2);
-        $(this).find('span').css('line-height',(td.height()-2)+'px');
+        $(this).find('span').width(td.width()+1);
+        $(this).find('span').height(td.height()+3);
+        $(this).find('span').css('line-height',(td.height()+3)+'px');
     });
 }

@@ -1,1 +1,0 @@
-import * as avalon from 'avalon2';
