@@ -1,5 +1,7 @@
 import './components/ms-menu';
 import './components/ms-table';
+import './components/ms-table-vue/ms-table-header';
+import './components/ms-table-vue';
 import './components/ms-easy-table';
 import './components/ms-ie8-table';
 import './components/ms-pagination/ms-pagination';

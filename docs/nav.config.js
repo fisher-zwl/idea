@@ -146,6 +146,15 @@ module.exports = [{
              });
          }
     },{
+        key: 'component-demo-table-vue-table-vue',
+        title: 'table 数据表格vue',
+        uri: '/table-vue',
+        location: function (resolve) {
+             require.ensure([], function () {
+                 resolve(require('../components/ms-table-vue/ms-table-vue.md'));
+             });
+         }
+    }, {
         key: 'component-demo-table-table',
         title: 'table 数据表格',
         uri: '/table',
