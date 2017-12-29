@@ -16,6 +16,9 @@ avalon.component('ms-dialog', {
         $innerVm: '',
         okText: '',
         cancelText: '',
+        height:'',
+        width:'',
+        isMove:false,
         onOk() {},
         onCancel() {},
         onInit(event) {
@@ -56,11 +59,29 @@ avalon.component('ms-dialog', {
                     .on('shown.bs.modal', () => {
                         
                     });
+                    if(this.height && this.width){
+                        let height = this.height,
+                            width = this.width;
+                        vm.$dialog.find('.modal-dialog').css({
+                            "width": width+"px",
+                            "top": function () {
+                                return (vm.$dialog.height() - height - 70) / 2 + "px";  
+                            }
+                        });
+                        vm.$dialog.find('.modal-content').css({  
+                            "margin": "0px", 
+                            "height": height+"px",
+                            "width": width+"px"
+                        });
+                    }
                     const $content = vm.$dialog.find('.modal-content').attr(':controller', this.$innerVm);
                     if (this.footer.length) {
                         $content.append($(this.footer));
                     }
                     avalon.scan(vm.$dialog.get(0));
+                    if(this.isMove){
+                        DragDrop.enable();//拖放初始化
+                    }
                 } else {
                     if (vm.$dialog) {
                         $('body').trigger("click");
@@ -77,3 +98,69 @@ avalon.component('ms-dialog', {
         }
     }
 });
+
+//拖放
+let  DragDrop = function() {
+    var dragdrap ={
+        "enable":function() {
+            $(document).mousedown(handleEvent);
+            $(document).mousemove(handleEvent);
+            $(document).mouseup(handleEvent);
+        },
+        "disable": function() {
+            $(document).unbind('mousedown');
+            $(document).unbind('mousemove');
+            $(document).unbind('mouseup');
+        }
+    },
+        dragging = null,
+        diffX = 0,
+        diffY = 0;
+  
+    function handleEvent(event) {
+    
+        event = event || window.event;
+    
+        switch(event.type) {
+            case 'mousedown' :
+                
+                var target = event.target || event.srcElement,
+                    targetParent = target.offsetParent;
+                
+                if (targetParent == null) {
+                    return;
+                }
+                // if(targetParent.className.indexOf('yhglDraggable') == -1){
+                //     return;
+                // }
+                if (event.target.className == 'modal-header' || event.target.parentElement.className == 'modal-header') {
+                    dragging = targetParent;
+                    diffX = event.clientX - targetParent.offsetLeft;
+                    diffY = event.clientY - targetParent.offsetTop;
+                } else {
+                    return;
+                }
+                break;
+                
+            case 'mousemove' :
+                
+                if (dragging !== null) {
+                    dragging.style.left = (event.clientX - diffX) + 'px';
+                    dragging.style.top = (event.clientY - diffY) + 'px';
+                } else {
+                    return;
+                }
+                break;
+            
+            case 'mouseup' :
+                
+                if (dragging !== null) {
+                    dragging = null;
+                } else {
+                    return;
+                }
+                break;
+        };
+    };
+    return dragdrap;
+}();

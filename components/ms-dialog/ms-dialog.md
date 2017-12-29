@@ -4,7 +4,7 @@
 
 ``` html
 <div :controller="doc-dialog-basic">
-    <ms-dialog :widget="{$innerVm: 'doc-dialog-basic_form', show: @show, onCancel: @handleCancel, onOk: @handleOk}">
+    <ms-dialog :widget="{$innerVm: 'doc-dialog-basic_form', show: @show, onCancel: @handleCancel, onOk: @handleOk,height:300,width:500,isMove:true}">
         <div slot="body" ms-skip>
             <xmp is="ms-form">
                 <ms-form-item :widget="{label: '标题'}">
@@ -172,6 +172,11 @@ avalon.define({
 | size | 对话框尺寸 | 'large' \| 'small' | '' |
 | okText | 自定义确认按钮文字 | string | '保存' |
 | cancelText | 自定义取消按钮文字 | string | '取消' |
+| height | 弹窗的高度 | number | 无 |
+| width | 弹窗的宽度 | number | 无 |
+| isMove | 弹窗是否可以移动 | boolean | false |
 | $innerVm | 对话框内部视图的 VM id | string | '' |
 | onOk | 点击确定的回调 | function | noop |
 | onCancel | 点击取消的回调 | function | noop |
+
+> 注意：只当height和width有值时，弹窗才会垂直居中显示
