@@ -1,0 +1,47 @@
+@import '../../styles/index';
+@table-prefix-cls: ~"@{ane-prefix}-table-vue";
+
+.@{table-prefix-cls} {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin-bottom: 5px;
+    overflow: auto;
+    // border-left: 1px solid #a5b4bd;
+    // border-bottom: 1px solid #a5b4bd;
+
+    &-fixed-header {
+        height: auto;
+    }
+
+    &-fixed-body{
+        position: absolute;
+        top: 34px;
+        left: 0;
+        right: 0;
+        bottom: 0px;
+        overflow: auto;
+    }
+
+    &-fixed-footer{
+    }
+
+    .table-vue{
+        width: 100%;
+        margin-bottom: 0px;
+    }
+    .table-vue>thead tr th,.table-vue>tbody tr td{
+        border-bottom: 1px solid #a5b4bd;
+        height: 34px;
+        text-align: center;
+    }
+
+    .generate-columns(99);
+    .generate-columns(@n, @i: 1) when (@i =< @n) {
+    .col-@{i} {
+        width: (@i * 100% / 100);
+        display: inline-block;
+    }
+    .generate-columns(@n, (@i + 1));
+    }
+}

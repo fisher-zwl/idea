@@ -1,0 +1,14 @@
+<div>
+    <table class="table-vue">
+        <template>
+            <colgroup span="@columns_data.length">
+                <col :for="el in @columns_data" width="100px"></col>
+            </colgroup>
+        </template>
+        <tbody>
+            <tr :for="el in @footer_data">
+                <tb :for="el in @columns_data" :css="{width:el.width,display:'inline-block'}">{{el.field}}</tb>
+            </tr>
+        </tbody>
+    </table>
+</div>

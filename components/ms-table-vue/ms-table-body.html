@@ -1,0 +1,9 @@
+<div>
+    <table class="table-vue">
+        <tbody>
+            <tr :for="el in @table_data">
+                <td :for="el in @columns_data" :class="['col-'+ el.width]">{{el.field}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

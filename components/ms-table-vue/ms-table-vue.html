@@ -1,0 +1,13 @@
+<div class="ane-table-vue">
+    <ms-table-header :class="['ane-table-vue-fixed-header']" :widget="{columns_data:@columns_data}" :css="{paddingRight:@scrollWidth}"></ms-table-header>
+    <ms-table-body :class="['ane-table-vue-fixed-body']" :widget="{table_data:@data,columns_data:@columns_data}"></ms-table-body>
+    <ms-table-footer :if="" :class="['ane-table-vue-fixed-footer']" :widget="{footer_data:[],columns_data:@columns_data}" :css="{paddingRight:@scrollWidth}"></ms-table-footer>
+    <div class="ane-table-vue-fixed-left" :if="">
+        <ms-table-header :class="['ane-table-vue-fixed-header']" :widget="{columns_data:@columns_data}" :css="{paddingRight:@scrollWidth}"></ms-table-header>
+        <ms-table-body :class="['ane-table-vue-fixed-body']" :widget="{table_data:@data,columns_data:@columns_data}"></ms-table-body>
+    </div>
+    <div class="ane-table-vue-fixed-right" :if="">
+        <ms-table-header :class="['ane-table-vue-fixed-header']" :widget="{columns_data:@columns_data}" :css="{paddingRight:@scrollWidth}"></ms-table-header>
+        <ms-table-body :class="['ane-table-vue-fixed-body']" :widget="{table_data:@data,columns_data:@columns_data}"></ms-table-body>
+    </div>
+</div>  
