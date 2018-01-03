@@ -1,5 +1,5 @@
 <div>
-    <table class="table-vue">
+    <table class="table-vue"  :css="{width:@tableWidth}">
         <thead>
             <tr>
                 <th :for="el in @columns_data" :class="['col-'+ el.width]">{{el.title}}</th>

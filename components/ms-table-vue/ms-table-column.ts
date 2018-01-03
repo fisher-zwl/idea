@@ -15,7 +15,7 @@ avalon.component('ms-table-column', {
                 'width':this.width,
                 'type':this.type
             };
-            console.log(columns_data);
+            //console.log(columns_data);
 
         }
     }

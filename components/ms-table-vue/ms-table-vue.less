@@ -5,35 +5,48 @@
     position: relative;
     height: 100%;
     width: 100%;
-    margin-bottom: 5px;
-    overflow: auto;
+    overflow: hidden;
     // border-left: 1px solid #a5b4bd;
     // border-bottom: 1px solid #a5b4bd;
 
-    &-fixed-header {
+    &-header {
+        width: 100%;
+        overflow: hidden;
         height: auto;
     }
 
-    &-fixed-body{
+    &-body{
+        // position: absolute;
+        // top: 34px;
+        // left: 0;
+        // right: 0;
+        // bottom: 0px;
+        //overflow: auto;
+        //max-height: 115px;
+        overflow: auto;
+        position: relative;
         position: absolute;
         top: 34px;
         left: 0;
-        right: 0;
-        bottom: 0px;
-        overflow: auto;
+        width: 100%;
+        bottom: 0;
     }
 
-    &-fixed-footer{
+    &-footer{
     }
 
     .table-vue{
-        width: 100%;
+        //width: 2000px;
         margin-bottom: 0px;
     }
+
     .table-vue>thead tr th,.table-vue>tbody tr td{
         border-bottom: 1px solid #a5b4bd;
+        // border-left: 1px solid #a5b4bd;
         height: 34px;
         text-align: center;
+        vertical-align: middle;
+        line-height: 34px;
     }
 
     .generate-columns(99);

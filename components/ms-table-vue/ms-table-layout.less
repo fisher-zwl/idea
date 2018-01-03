@@ -1,0 +1,73 @@
+//左侧固定列
+.ane-table-vue-fixed-left{
+    height: 132px;
+    width: 300px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    background-color: #fff;
+    z-index: 3;
+    box-shadow: 0 0 10px rgba(0,0,0,.12);
+
+    .ane-table-vue-fixedLeft-body {
+       position: absolute;
+       left: 0;
+       top: 34px;
+       bottom: 0px;
+       width: 100%;
+       overflow: hidden;
+    }
+}
+//右侧固定列
+.ane-table-vue-fixed-right{
+    height: 132px;
+    width: 600px;
+    position: absolute;
+    top: 0;
+    right: 17px;
+    overflow: hidden;
+    background-color: #fff;
+    z-index: 3;
+    box-shadow: 0 0 10px rgba(0,0,0,.12);
+
+    .ane-table-vue-fixedRight-body {
+       position: absolute;
+       top: 34px;
+       bottom: 0px;
+       width: 100%;
+       overflow: hidden;
+    }
+}
+
+//出现垂直滚动条时的右上角距离差样式
+.ane-table-vue-fixed-right-patch{
+    width: 17px;
+    height: 34px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    border-bottom: 1px solid #a5b4bd;
+    z-index: 3;
+}
+
+.is-scroll-right,.is-scroll-left{
+    box-shadow: none;
+}
+
+.bbbb{
+    background-color: #e8eff5;
+}
+
+//表格是否有边框样式
+.ane-table-vue-border{
+    border: 1px solid #a5b4bd;
+
+    .table-vue thead tr th,.table-vue tbody tr td{
+        border-right: 1px solid #a5b4bd;
+    }
+    .table-vue thead tr th:last-child,.table-vue tbody tr td:last-child{
+        border-right:none;
+    }
+}

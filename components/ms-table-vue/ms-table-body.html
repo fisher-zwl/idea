@@ -1,8 +1,11 @@
 <div>
-    <table class="table-vue">
+    <table class="table-vue" :css="{width:@tableWidth}">
         <tbody>
-            <tr :for="el in @table_data">
-                <td :for="el in @columns_data" :class="['col-'+ el.width]">{{el.field}}</td>
+            <tr :for="($index,record) in @table_data" :hover="['bbbb']" class="ane-table-vue-row" :mouseover="@handleMouseOver($index)">
+                <td :for="el in @columns_data" :class="['col-'+ el.width]">
+                    <span :if="!el.inlineTemplate" :html="record[el.field] ? record[el.field] : '-'"></span>
+                    <span :if="el.inlineTemplate" :html="el.inlineTemplate"></span>
+                </td>
             </tr>
         </tbody>
     </table>

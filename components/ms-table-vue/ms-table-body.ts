@@ -5,8 +5,9 @@ avalon.component('ms-table-body', {
     defaults: {
         columns_data:[],
         table_data:[],
+        tableWidth:100+'%',
         onInit(){
-            console.log('body');
+            //console.log('body');
         }
     }
 });
