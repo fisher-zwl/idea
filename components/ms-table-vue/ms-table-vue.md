@@ -87,7 +87,7 @@ vm_saika_border.fetch();
 
 ```html
 <div :controller="table-saika-hover" :css="{'margin-bottom':'20px',height:150}">
-    <ms-table-vue :widget="{data:@remoteList,tableWidth:@tableWidth,footer_data:@footer_data,loading:@loading,fixedLeft:@fixedLeft,fixedRight:@fixedRight,fixedLeft_width:@fixedLeft_width,fixedRight_width:@fixedRight_width,tableBodyClass:@tableBodyClass}">
+    <ms-table-vue :widget="{data:@remoteList,tableWidth:@tableWidth,footer_data:@footer_data,loading:@loading,fixedLeft:@fixedLeft,fixedRight:@fixedRight,fixedLeft_width:@fixedLeft_width,fixedRight_width:@fixedRight_width,tableBorder:@tableBorder}">
         <ms-table-column :widget="{title:'序号',field:'id',width:10,type:'selection',rowspan:2,colspan:2}">{{record.id+1}}</ms-table-column>
         <ms-table-column :widget="{title:'全国',field:'name',width:20}"></ms-table-column>
         <ms-table-column :widget="{title:'地区',field:'address',width:20}"></ms-table-column>
@@ -110,10 +110,10 @@ const vm_saika_hover = avalon.define({
     loading:false,
     fixedLeft:true,
     fixedRight:true,
+    tableBorder:true,
     fixedLeft_width:200,
     fixedRight_width:200,
     tableWidth:2000,
-    tableBodyClass:'table-body-saika-hover',
     list: avalon.range(8).map(n => ({
         id: n, name: '老狼' + n, address: '深山', province: '老林',date:'1514895537781',status:1,statusTitle:'在线'
     })),
@@ -130,7 +130,7 @@ vm_saika_hover.fetch();
 
 ```html
 <div :controller="table-saika" :css="{'margin-bottom':'20px',height:150}">
-    <ms-table-vue :widget="{data:@remoteList,tableWidth:@tableWidth,footer_data:@footer_data,loading:@loading,fixedLeft:@fixedLeft,fixedRight:@fixedRight,fixedLeft_width:@fixedLeft_width,fixedRight_width:@fixedRight_width,tableBodyClass:@tableBodyClass}">
+    <ms-table-vue :widget="{data:@remoteList,tableWidth:@tableWidth,footer_data:@footer_data,loading:@loading,fixedLeft:@fixedLeft,fixedRight:@fixedRight,fixedLeft_width:@fixedLeft_width,fixedRight_width:@fixedRight_width}">
         <ms-table-column :widget="{title:'序号',field:'region_id',width:10,type:'selection',rowspan:2,colspan:2}"></ms-table-column>
         <ms-table-column :widget="{title:'全国',field:'region_name',width:20}"></ms-table-column>
         <ms-table-column :widget="{title:'地区',field:'region_name',width:20}"></ms-table-column>
@@ -156,7 +156,6 @@ const vm_saika = avalon.define({
     fixedLeft_width:200,
     fixedRight_width:200,
     tableWidth:2000,
-    tableBodyClass:'table-body-saika',
     fetch(params = {}) {
         this.loading = true;
         $.getJSON('https://easy-mock.com/mock/58ff1b7c5e43ae5dbea5eff3/api/demo', params).then(data => {

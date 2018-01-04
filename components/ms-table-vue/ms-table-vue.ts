@@ -15,6 +15,7 @@ import {
 avalon.component('ms-table-vue', {
     template: require('./ms-table-vue.html'),
     defaults: {
+        table_id:'',
         data: [],
         columns_data:[],
         footer_data:[],
@@ -31,7 +32,6 @@ avalon.component('ms-table-vue', {
         scrollWidth_able:0,//可滚动的宽度
         fixedLeft_width:0,//左侧固定列宽度
         fixedRight_width:0,
-        tableBodyClass:'table-body',
         tableBorder:false,//表格是否有边框
         mouseenter_row:'',
         handleMouseenter(row){//鼠标移进的事件
@@ -42,7 +42,8 @@ avalon.component('ms-table-vue', {
         },
         onInit:function(event){
             let avalon_this = this;
-            //console.log(event.vmodel);
+            avalon_this.table_id = event.vmodel.$id;
+            console.log(event.vmodel.$id);
             let columns = getChildValue(event.vmodel);
             let columns_data = [];
             columns.forEach(function(column) {
@@ -53,7 +54,6 @@ avalon.component('ms-table-vue', {
             avalon_this.columns_data_left = [columns_data[0]];
             let len = columns_data.length-1;
             avalon_this.columns_data_right = [columns_data[len]];
-            //console.log(columns);
             this.$watch('data', (v) => {
 
             });
@@ -67,9 +67,9 @@ avalon.component('ms-table-vue', {
                     scrollFnc(avalon_this);
                 }
             });
-            $('.'+avalon_this.tableBodyClass).scroll(function(){//监听水平滚动条
-                //console.log($('.'+avalon_this.tableBodyClass));
-                avalon_this.scrollWidth_able = avalon_this.scrollWidth+ $('.'+avalon_this.tableBodyClass).get(0).scrollWidth-$('.'+avalon_this.tableBodyClass).get(0).offsetWidth; 
+            
+            $('#'+avalon_this.table_id).find('.ane-table-vue-body').scroll(function(){//监听滚动
+                avalon_this.scrollWidth_able = avalon_this.scrollWidth+  $('#'+avalon_this.table_id).find('.ane-table-vue-body').get(0).scrollWidth- $('#'+avalon_this.table_id).find('.ane-table-vue-body').get(0).offsetWidth; 
                 if($(this).scrollLeft() === avalon_this.scrollWidth_able){
                     avalon_this.is_scrollRight = true;
                 }else if($(this).scrollLeft() < avalon_this.scrollWidth_able){
@@ -80,9 +80,9 @@ avalon.component('ms-table-vue', {
                 }else if($(this).scrollLeft() > 0){
                     avalon_this.is_scrollLeft = false;
                 }
-                $('.ane-table-vue-header').scrollLeft($(this).scrollLeft()); 
-                $('.ane-table-vue-fixedLeft-body').scrollTop($(this).scrollTop());
-                $('.ane-table-vue-fixedRight-body').scrollTop($(this).scrollTop());
+                $('#'+avalon_this.table_id).find('.ane-table-vue-header').scrollLeft($(this).scrollLeft()); 
+                $('#'+avalon_this.table_id).children().find('.ane-table-vue-fixedLeft-body').scrollTop($(this).scrollTop());
+                $('#'+avalon_this.table_id).children().find('.ane-table-vue-fixedRight-body').scrollTop($(this).scrollTop());
             });
         },
         onReady: function(event) {
@@ -97,7 +97,7 @@ avalon.component('ms-table-vue', {
     }
 });
 function scrollFnc(avalon_this){//判断是否有垂直滚动条
-    if($('.'+avalon_this.tableBodyClass).get(0).offsetHeight < $('.'+avalon_this.tableBodyClass).get(0).scrollHeight){
+    if( $('#'+avalon_this.table_id).find('.ane-table-vue-body').get(0).offsetHeight <  $('#'+avalon_this.table_id).find('.ane-table-vue-body').get(0).scrollHeight){
         avalon_this.scrollWidth = 17;
         avalon_this.fixedPatch = true;
     }else{
