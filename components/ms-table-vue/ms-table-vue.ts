@@ -98,14 +98,15 @@ avalon.component('ms-table-vue', {
     }
 });
 function scrollFnc(avalon_this){//判断是否有垂直滚动条
-    if( $('#'+avalon_this.table_id).find('.ane-table-vue-body').get(0).offsetHeight <  $('#'+avalon_this.table_id).find('.ane-table-vue-body').get(0).scrollHeight){
+    let atvb = $('#'+avalon_this.table_id).find('.ane-table-vue-body').get(0);
+    if( atvb.offsetHeight <  atvb.scrollHeight){
         avalon_this.scrollWidth = 17;
         avalon_this.fixedPatch = true;
     }else{
         avalon_this.scrollWidth = 0;
         avalon_this.fixedPatch = false;
     }
-    if( $('#'+avalon_this.table_id).find('.ane-table-vue-body').get(0).offsetWidth <  $('#'+avalon_this.table_id).find('.ane-table-vue-body').get(0).scrollWidth){
+    if( atvb.offsetWidth <  atvb.scrollWidth){
         avalon_this.fixed_bottom = 18;
     }else{
         avalon_this.fixed_bottom = 1;
