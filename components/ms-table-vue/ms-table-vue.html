@@ -1,14 +1,57 @@
 <div class="ane-table-vue" :class="[@tableBorder?'ane-table-vue-border':'']">
-    <ms-table-header :class="['ane-table-vue-header']" :widget="{columns_data:@columns_data,tableWidth:@tableWidth}" :css="{paddingRight:@scrollWidth}"></ms-table-header>
-    <ms-table-body :class="['ane-table-vue-body',@tableBodyClass]" :widget="{table_data:@data,columns_data:@columns_data,tableWidth:@tableWidth}"></ms-table-body>
-    <ms-table-footer :if="" :class="['ane-table-vue-footer']" :widget="{footer_data:[],columns_data:@columns_data}" :css="{paddingRight:@scrollWidth}"></ms-table-footer>
-    <div class="ane-table-vue-fixed-left" :if="@fixedLeft" :class="@is_scrollLeft ? 'is-scroll-left':''" :css="{width:@fixedLeft_width}">
-        <ms-table-header :class="['ane-table-vue-fixedLeft-header']" :widget="{columns_data:@columns_data_left,tableWidth:@tableWidth}"></ms-table-header>
-        <ms-table-body :class="['ane-table-vue-fixedLeft-body']" :widget="{table_data:@data,columns_data:@columns_data_left,tableWidth:@tableWidth}"></ms-table-body>
+    <ms-table-header 
+        :class="['ane-table-vue-header']" 
+        :widget="{columns_data:@columns_data,tableWidth:@tableWidth}" :css="{paddingRight:@scrollWidth}">
+    </ms-table-header>
+    <ms-table-body 
+        :class="['ane-table-vue-body',@tableBodyClass]" 
+        :widget="{table_data:@data,
+            columns_data:@columns_data,
+            tableWidth:@tableWidth,
+            handleMouseenter:@handleMouseenter,
+            handleMouseLeave:@handleMouseLeave,
+            mouseenter_row:mouseenter_row}">
+    </ms-table-body>
+    <ms-table-footer 
+        :if="" 
+        :class="['ane-table-vue-footer']" 
+        :widget="{footer_data:[],columns_data:@columns_data}" :css="{paddingRight:@scrollWidth}">
+    </ms-table-footer>
+    <div class="ane-table-vue-fixed-left" 
+        :if="@fixedLeft" 
+        :class="@is_scrollLeft ? 'is-scroll-left':''" 
+        :css="{width:@fixedLeft_width}">
+        <ms-table-header 
+            :class="['ane-table-vue-fixedLeft-header']" 
+            :widget="{columns_data:@columns_data_left,tableWidth:@tableWidth}">
+        </ms-table-header>
+        <ms-table-body 
+            :class="['ane-table-vue-fixedLeft-body']" 
+            :widget="{table_data:@data,
+                columns_data:@columns_data_left,
+                tableWidth:@tableWidth,
+                handleMouseenter:@handleMouseenter,
+                handleMouseLeave:@handleMouseLeave,
+                mouseenter_row:@mouseenter_row}">
+        </ms-table-body>
     </div>
-    <div class="ane-table-vue-fixed-right" :if="@fixedRight" :class="@is_scrollRight ? 'is-scroll-right':''" :css="{width:@fixedRight_width}">
-        <ms-table-header :class="['ane-table-vue-fixedRight-header']" :widget="{columns_data:@columns_data_right,tableWidth:@tableWidth}"></ms-table-header>
-        <ms-table-body :class="['ane-table-vue-fixedRight-body']" :widget="{table_data:@data,columns_data:@columns_data_right,tableWidth:@tableWidth}"></ms-table-body>
+    <div class="ane-table-vue-fixed-right" 
+        :if="@fixedRight" 
+        :class="@is_scrollRight ? 'is-scroll-right':''" 
+        :css="{width:@fixedRight_width}">
+        <ms-table-header 
+            :class="['ane-table-vue-fixedRight-header']" 
+            :widget="{columns_data:@columns_data_right,tableWidth:@tableWidth}">
+        </ms-table-header>
+        <ms-table-body 
+            :class="['ane-table-vue-fixedRight-body']" 
+            :widget="{table_data:@data,
+                columns_data:@columns_data_right,
+                tableWidth:@tableWidth,
+                handleMouseenter:@handleMouseenter,
+                handleMouseLeave:@handleMouseLeave,
+                mouseenter_row:@mouseenter_row}">
+        </ms-table-body>
     </div>
     <div class="ane-table-vue-fixed-right-patch" :if="@fixedPatch"></div>
 </div>  

@@ -1,7 +1,7 @@
 <div>
     <table class="table-vue" :css="{width:@tableWidth}">
         <tbody>
-            <tr :for="($index,record) in @table_data" :hover="['bbbb']" class="ane-table-vue-row" :mouseover="@handleMouseOver($index)">
+            <tr :for="($index,record) in @table_data" class="ane-table-vue-row" :mouseenter="@handleMouseenter($index)" :mouseleave="@handleMouseLeave()">
                 <td :for="el in @columns_data" :class="['col-'+ el.width]">
                     <span :if="!el.inlineTemplate" :html="record[el.field] ? record[el.field] : '-'"></span>
                     <span :if="el.inlineTemplate" :html="el.inlineTemplate"></span>

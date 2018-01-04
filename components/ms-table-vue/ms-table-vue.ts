@@ -33,6 +33,13 @@ avalon.component('ms-table-vue', {
         fixedRight_width:0,
         tableBodyClass:'table-body',
         tableBorder:false,//表格是否有边框
+        mouseenter_row:'',
+        handleMouseenter(row){//鼠标移进的事件
+            this.mouseenter_row = row;
+        },
+        handleMouseLeave(){
+            this.mouseenter_row = '';
+        },
         onInit:function(event){
             let avalon_this = this;
             //console.log(event.vmodel);
