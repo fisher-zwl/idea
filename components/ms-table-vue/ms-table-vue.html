@@ -20,7 +20,7 @@
     <div class="ane-table-vue-fixed-left" 
         :if="@fixedLeft" 
         :class="@is_scrollLeft ? 'is-scroll-left':''" 
-        :css="{width:@fixedLeft_width}">
+        :css="{width:@fixedLeft_width,bottom:@fixed_bottom}">
         <ms-table-header 
             :class="['ane-table-vue-fixedLeft-header']" 
             :widget="{columns_data:@columns_data_left,tableWidth:@tableWidth}">
@@ -38,7 +38,7 @@
     <div class="ane-table-vue-fixed-right" 
         :if="@fixedRight" 
         :class="@is_scrollRight ? 'is-scroll-right':''" 
-        :css="{width:@fixedRight_width}">
+        :css="{width:@fixedRight_width,bottom:@fixed_bottom}">
         <ms-table-header 
             :class="['ane-table-vue-fixedRight-header']" 
             :widget="{columns_data:@columns_data_right,tableWidth:@tableWidth}">

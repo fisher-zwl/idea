@@ -24,6 +24,7 @@ avalon.component('ms-table-vue', {
         tableWidth:100+'%',//表格的宽度
         fixedLeft:false,//左侧固定
         fixedRight:false,//右侧固定
+        fixed_bottom:1,//左右侧底部bottom
         columns_data_left:[],
         columns_data_right:[],
         fixedPatch:false,//右边滚动条间隙
@@ -103,5 +104,10 @@ function scrollFnc(avalon_this){//判断是否有垂直滚动条
     }else{
         avalon_this.scrollWidth = 0;
         avalon_this.fixedPatch = false;
+    }
+    if( $('#'+avalon_this.table_id).find('.ane-table-vue-body').get(0).offsetWidth <  $('#'+avalon_this.table_id).find('.ane-table-vue-body').get(0).scrollWidth){
+        avalon_this.fixed_bottom = 18;
+    }else{
+        avalon_this.fixed_bottom = 1;
     }
 }
