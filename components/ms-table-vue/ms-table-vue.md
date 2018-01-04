@@ -35,7 +35,7 @@ const vm_saika_1 = avalon.define({
      fetch(params = {}) {
         this.loading = true;
         this.remoteList = this.list;
-        console.log(this.list);
+        //console.log(this.list);
         this.loading = false;
     }
 });
@@ -76,7 +76,7 @@ const vm_saika_border = avalon.define({
      fetch(params = {}) {
         this.loading = true;
         this.remoteList = this.list;
-        console.log(this.list);
+        //console.log(this.list);
         this.loading = false;
     }
 });

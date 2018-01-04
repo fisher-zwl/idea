@@ -6,7 +6,7 @@ avalon.component('ms-table-footer', {
         columns_data:[],
         footer_data:[],
         onInit(){
-            console.log('body');
+            //console.log('body');
         }
     }
 });
