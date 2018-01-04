@@ -2,7 +2,12 @@
     <table class="table-vue"  :css="{width:@tableWidth}">
         <thead>
             <tr>
-                <th :for="el in @columns_data" :class="['col-'+ el.width]">{{el.title}}</th>
+                <th :for="el in @columns_data" :class="['col-'+ el.width]">
+                    <span :if="@el.type == 'select'">
+                        <ms-checkbox :widget="{checked:@checkedAll,onChange:@handleCheckAll}"></ms-checkbox>
+                    </span>
+                    <span>{{el.title}}</span>
+                </th>
             </tr>
         </thead>
     </table>

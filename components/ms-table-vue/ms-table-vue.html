@@ -1,13 +1,21 @@
 <div class="ane-table-vue" :class="[@tableBorder?'ane-table-vue-border':'']" ms-attr="{id:@$id}">
     <ms-table-header 
         :class="['ane-table-vue-header']" 
-        :widget="{columns_data:@columns_data,tableWidth:@tableWidth}" :css="{paddingRight:@scrollWidth}">
+        :css="{paddingRight:@scrollWidth}"
+        :widget="{columns_data:@columns_data,
+            checkedAll:@checkedAll,
+            handleCheckAll:@handleCheckAll,
+            tableWidth:@tableWidth}">
     </ms-table-header>
     <ms-table-body 
         :class="['ane-table-vue-body',@tableBodyClass]" 
         :widget="{table_data:@data,
             columns_data:@columns_data,
             tableWidth:@tableWidth,
+            actions:@actions,
+            checked:@checked,
+            key:@key,
+            handleCheck:@handleCheck,
             handleMouseenter:@handleMouseenter,
             handleMouseLeave:@handleMouseLeave,
             mouseenter_row:mouseenter_row}">
@@ -30,6 +38,7 @@
             :widget="{table_data:@data,
                 columns_data:@columns_data_left,
                 tableWidth:@tableWidth,
+                actions:@actions,
                 handleMouseenter:@handleMouseenter,
                 handleMouseLeave:@handleMouseLeave,
                 mouseenter_row:@mouseenter_row}">
@@ -48,6 +57,7 @@
             :widget="{table_data:@data,
                 columns_data:@columns_data_right,
                 tableWidth:@tableWidth,
+                actions:@actions,
                 handleMouseenter:@handleMouseenter,
                 handleMouseLeave:@handleMouseLeave,
                 mouseenter_row:@mouseenter_row}">

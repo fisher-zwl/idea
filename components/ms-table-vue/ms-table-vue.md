@@ -83,12 +83,12 @@ const vm_saika_border = avalon.define({
 vm_saika_border.fetch();
 ```
 
-###hover事件
+### hover事件
 
 ```html
 <div :controller="table-saika-hover" :css="{'margin-bottom':'20px',height:150}">
     <ms-table-vue :widget="{data:@remoteList,tableWidth:@tableWidth,footer_data:@footer_data,loading:@loading,fixedLeft:@fixedLeft,fixedRight:@fixedRight,fixedLeft_width:@fixedLeft_width,fixedRight_width:@fixedRight_width,tableBorder:@tableBorder}">
-        <ms-table-column :widget="{title:'序号',field:'id',width:10,type:'selection',rowspan:2,colspan:2}">{{record.id+1}}</ms-table-column>
+        <ms-table-column :widget="{title:'序号',field:'id',width:10,rowspan:2,colspan:2}">{{record.id+1}}</ms-table-column>
         <ms-table-column :widget="{title:'全国',field:'name',width:20}"></ms-table-column>
         <ms-table-column :widget="{title:'地区',field:'address',width:20}"></ms-table-column>
         <ms-table-column :widget="{title:'乡镇',field:'province',width:20}"></ms-table-column>
@@ -126,12 +126,135 @@ const vm_saika_hover = avalon.define({
 vm_saika_hover.fetch();
 ```
 
+### checkbox事件
+
+```html
+<div :controller="table-saika-checkbox" :css="{'margin-bottom':'20px',height:150}">
+    <ms-table-vue :widget="{data:@remoteList,tableWidth:@tableWidth,footer_data:@footer_data,loading:@loading,fixedRight:@fixedRight,fixedLeft_width:@fixedLeft_width,fixedRight_width:@fixedRight_width,tableBorder:@tableBorder,onSelect:@onSelect,onSelectAll:@onSelectAll}">
+        <ms-table-column :widget="{title:'',field:'id',width:10,type:'select',rowspan:2,colspan:2}"></ms-table-column>
+        <ms-table-column :widget="{title:'全国',field:'name',width:20}"></ms-table-column>
+        <ms-table-column :widget="{title:'地区',field:'address',width:20}"></ms-table-column>
+        <ms-table-column :widget="{title:'乡镇',field:'province',width:20}"></ms-table-column>
+        <ms-table-column :widget="{title:'省会',field:'date',width:20}"></ms-table-column>
+        <ms-table-column :widget="{title:'PID',field:'statusTitle',width:10}"></ms-table-column>
+    </ms-table-vue>
+</div>
+```
+
+```js
+import * as avalon from 'avalon2';
+import * as $ from 'jquery';
+import { message } from 'ane';
+
+const vm_saika_checkbox = avalon.define({
+    $id: 'table-saika-checkbox',
+    remoteList: [],
+    footer_data:[],
+    loading:false,
+    fixedRight:true,
+    tableBorder:true,
+    fixedLeft_width:200,
+    fixedRight_width:200,
+    tableWidth:2000,
+    list: avalon.range(8).map(n => ({
+        id: n, name: '老狼' + n, address: '深山', province: '老林',date:'1514895537781',status:1,statusTitle:'在线'
+    })),
+    onSelect(record, selected, selectedRows) {
+        console.log(record, selected, selectedRows);
+    },
+    onSelectAll(selected, selectedRows) {
+        console.log(selected, selectedRows);
+    },
+    fetch() {
+        this.loading = true;
+        this.remoteList = this.list;
+        this.loading = false;
+    }
+});
+vm_saika_checkbox.fetch();
+```
+
+### 操作列事件
+
+```html
+<div :controller="table-saika-operation" :css="{'margin-bottom':'20px',height:150}">
+    <ms-table-vue :widget="{data:@remoteList,tableWidth:@tableWidth,footer_data:@footer_data,loading:@loading,fixedRight:@fixedRight,fixedLeft_width:@fixedLeft_width,fixedRight_width:@fixedRight_width,tableBorder:@tableBorder,onSelect:@onSelect,onSelectAll:@onSelectAll,actions:@actions}">
+        <ms-table-column :widget="{title:'',field:'id',width:10,type:'select',rowspan:2,colspan:2}"></ms-table-column>
+        <ms-table-column :widget="{title:'全国',field:'name',width:20}"></ms-table-column>
+        <ms-table-column :widget="{title:'地区',field:'address',width:20}"></ms-table-column>
+        <ms-table-column :widget="{title:'乡镇',field:'province',width:20}"></ms-table-column>
+        <ms-table-column :widget="{title:'省会',field:'date',width:20}"></ms-table-column>
+        <ms-table-column :widget="{title:'操作',field:'statusTitle',width:10,type:'operation'}">
+            <span>
+                <a :click="handle('search')" href="javascript:void(0)" :css="{marginRight:10}">查看</a>
+                <a :click="handle('delete')" href="javascript:void(0)" :css="{marginRight:10}">删除</a>
+                <a :click="handle('edit')" href="javascript:void(0)">编辑</a>
+            </span>
+        </ms-table-column>
+    </ms-table-vue>
+</div>
+```
+
+```js
+import * as avalon from 'avalon2';
+import * as $ from 'jquery';
+import { notification } from 'ane';
+
+const vm_saika_operation= avalon.define({
+    $id: 'table-saika-operation',
+    remoteList: [],
+    footer_data:[],
+    loading:false,
+    fixedRight:true,
+    tableBorder:true,
+    fixedLeft_width:200,
+    fixedRight_width:200,
+    tableWidth:2000,
+    list: avalon.range(8).map(n => ({
+        id: n, name: '老狼' + n, address: '深山', province: '老林',date:'1514895537781',status:1,statusTitle:'在线'
+    })),
+    onSelect(record, selected, selectedRows) {
+        console.log(record, selected, selectedRows);
+    },
+    onSelectAll(selected, selectedRows) {
+        console.log(selected, selectedRows);
+    },
+    actions(type, text, record, index) {
+        console.log(type, text, record, index);
+        if (type == 'search') {
+            notification.success({
+                message: '查看数据',
+                title: '通知'
+            });
+        }
+        if (type == 'delete') {
+            notification.success({
+                message: '删除成功',
+                title: '通知'
+            });
+        }
+        if (type == 'edit') {
+            notification.success({
+                message: '编辑成功',
+                title: '通知'
+            });
+        }
+    },
+    fetch() {
+        this.loading = true;
+        this.remoteList = this.list;
+        this.loading = false;
+    }
+});
+vm_saika_operation.fetch();
+```
+
 ### 远程分页表格测试(vue)
 
 ```html
 <div :controller="table-saika" :css="{'margin-bottom':'20px',height:150}">
     <ms-table-vue :widget="{data:@remoteList,tableWidth:@tableWidth,footer_data:@footer_data,loading:@loading,fixedLeft:@fixedLeft,fixedRight:@fixedRight,fixedLeft_width:@fixedLeft_width,fixedRight_width:@fixedRight_width}">
-        <ms-table-column :widget="{title:'序号',field:'region_id',width:10,type:'selection',rowspan:2,colspan:2}"></ms-table-column>
+        <ms-table-column :widget="{title:'序号',field:'region_id',width:10,rowspan:2,colspan:2}"></ms-table-column>
         <ms-table-column :widget="{title:'全国',field:'region_name',width:20}"></ms-table-column>
         <ms-table-column :widget="{title:'地区',field:'region_name',width:20}"></ms-table-column>
         <ms-table-column :widget="{title:'乡镇',field:'region_name',width:20}"></ms-table-column>

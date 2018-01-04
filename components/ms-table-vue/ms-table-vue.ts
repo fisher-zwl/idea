@@ -17,9 +17,13 @@ avalon.component('ms-table-vue', {
     defaults: {
         table_id:'',
         data: [],
+        key: 'id',
         columns_data:[],
         footer_data:[],
         loading:false,
+        checked: [],
+        selection: [],
+        checkedAll:false,
         scrollWidth:0,
         tableWidth:100+'%',//表格的宽度
         fixedLeft:false,//左侧固定
@@ -35,11 +39,46 @@ avalon.component('ms-table-vue', {
         fixedRight_width:0,
         tableBorder:false,//表格是否有边框
         mouseenter_row:'',
+        actions: avalon.noop,
+        onSelect: avalon.noop,
+        onSelectAll: avalon.noop,
+        selectionChange: avalon.noop,
         handleMouseenter(row){//鼠标移进的事件
             this.mouseenter_row = row;
         },
         handleMouseLeave(){
             this.mouseenter_row = '';
+        },
+        handleCheckAll: function(e) {
+            var _this = this;
+            var data = _this.data;
+            if (e.target.checked) {
+                data.forEach(function(record) {
+                    _this.checked.ensure(record[_this.key]);
+                    _this.selection.ensure(record);
+                });
+            } else {
+                if (data.length > 0) {
+                    this.checked.clear();
+                    this.selection.clear();
+                } else {
+                    this.checked.removeAll(function(el) { return data.map(function(record) { return record[_this.key]; }).indexOf(el) !== -1; });
+                    this.selection.removeAll(function(el) { return data.indexOf(el) !== -1; });
+                }
+            }
+            this.selectionChange(this.checked, this.selection.$model);
+            this.onSelectAll(e.target.checked, this.selection.$model);
+        },
+        handleCheck: function(checked, record) {
+            if (checked) {
+                this.checked.ensure(record[this.key]);
+                this.selection.ensure(record);
+            } else {
+                this.checked.remove(record[this.key]);
+                this.selection.remove(record);
+            }
+            this.selectionChange(this.checked, this.selection.$model);
+            this.onSelect(record.$model, checked, this.selection.$model);
         },
         onInit:function(event){
             let avalon_this = this;
@@ -49,6 +88,9 @@ avalon.component('ms-table-vue', {
             let columns_data = [];
             columns.forEach(function(column) {
                 columns_data.push(column.props);
+                if(column.props.type == "select"){
+                    avalon_this.key = column.props.field || avalon_this.key;
+                } 
             });
             //console.log(columns);
             avalon_this.columns_data = columns_data;

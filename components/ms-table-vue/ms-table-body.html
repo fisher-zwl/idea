@@ -3,8 +3,12 @@
         <tbody>
             <tr :for="($index,record) in @table_data" class="ane-table-vue-row" :mouseenter="@handleMouseenter($index)" :mouseleave="@handleMouseLeave()">
                 <td :for="el in @columns_data" :class="['col-'+ el.width]">
-                    <span :if="!el.inlineTemplate" :html="record[el.field] ? record[el.field] : '-'"></span>
-                    <span :if="el.inlineTemplate" :html="el.inlineTemplate"></span>
+                    <span :if="(!el.inlineTemplate )&& (el.type != 'select')" :html="record[el.field] ? record[el.field] : '-'"></span>
+                    <span :if="el.type == 'select'">
+                            <ms-checkbox :widget="{checked:@checked.indexOf(record[@key])!=-1,onChange:function(){@handleCheck(arguments[0].target.checked,record)}}"></ms-checkbox>
+                    </span>
+                    <span :if="(el.inlineTemplate) && (el.type == 'operation')" :html="@operationTranslate(el.inlineTemplate)"></span>
+                    <span :if="(el.inlineTemplate) && (el.type != 'operation')" :html="el.inlineTemplate"></span>
                 </td>
             </tr>
         </tbody>

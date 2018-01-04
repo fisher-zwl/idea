@@ -5,6 +5,8 @@ avalon.component('ms-table-header', {
     defaults: {
         columns_data:[],
         tableWidth:100+'%',
+        checkedAll:false,
+        handleCheckAll:avalon.noop,
         onInit(){
             //console.log('12w123');
         }
