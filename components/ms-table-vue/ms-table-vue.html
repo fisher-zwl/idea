@@ -1,12 +1,13 @@
 <div class="ane-table-vue" :class="[@tableBorder?'ane-table-vue-border':'']" ms-attr="{id:@$id}">
-    <ms-table-header 
-        :class="['ane-table-vue-header']" 
-        :css="{paddingRight:@scrollWidth}"
-        :widget="{columns_data:@columns_data,
-            checkedAll:@checkedAll,
-            handleCheckAll:@handleCheckAll,
-            tableWidth:@tableWidth}">
-    </ms-table-header>
+    <div :class="['ane-table-vue-header']" :css="{paddingRight:@scrollWidth}">
+        <ms-table-header 
+            :class="['table-vue-table']" 
+            :widget="{columns_data:@columns_data,
+                checkedAll:@checkedAll,
+                handleCheckAll:@handleCheckAll,
+                tableWidth:@tableWidth}">
+        </ms-table-header>
+    </div>
     <ms-table-body 
         :class="['ane-table-vue-body',@tableBodyClass]" 
         :widget="{table_data:@data,

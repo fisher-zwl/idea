@@ -123,7 +123,7 @@ avalon.component('ms-table-vue', {
                 }else if($(this).scrollLeft() > 0){
                     avalon_this.is_scrollLeft = false;
                 }
-                $('#'+avalon_this.table_id).find('.ane-table-vue-header').scrollLeft($(this).scrollLeft()); 
+                $('#'+avalon_this.table_id).find('.table-vue-table').scrollLeft($(this).scrollLeft()); 
                 $('#'+avalon_this.table_id).children().find('.ane-table-vue-fixedLeft-body').scrollTop($(this).scrollTop());
                 $('#'+avalon_this.table_id).children().find('.ane-table-vue-fixedRight-body').scrollTop($(this).scrollTop());
             });
