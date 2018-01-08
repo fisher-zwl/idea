@@ -10,8 +10,12 @@ controlComponent.extend({
         text: '',
         type: 'input', 
         disabled: false,
+        isClear:false,
         mapValueToText(value) {
             this.text = value;
+        },
+        clearValue(){
+            this.text = '';
         },
         onInit: function (event) {
             emitToFormItem(this);
@@ -22,6 +26,20 @@ controlComponent.extend({
                     denyValidate: true,
                     type: 'changed'
                 });
+            });
+            let avalon_this = this;
+            this.$watch('isClear',function(v){
+                //this.value = '';
+                if(v){
+                    this.mapValueToText('');
+                    this.handleChange({
+                        target: { value: '' },
+                        denyValidate: true,
+                        type: 'changed'
+                    });
+                }
+                //avalon_this.isClear = false;
+                //console.log(this.isClear);
             });
             this.mapValueToText(this.value);
         }
