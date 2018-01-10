@@ -29,7 +29,6 @@ controlComponent.extend({
             });
             let avalon_this = this;
             this.$watch('isClear',function(v){
-                //this.value = '';
                 if(v){
                     this.mapValueToText('');
                     this.handleChange({
@@ -38,8 +37,6 @@ controlComponent.extend({
                         type: 'changed'
                     });
                 }
-                //avalon_this.isClear = false;
-                //console.log(this.isClear);
             });
             this.mapValueToText(this.value);
         }

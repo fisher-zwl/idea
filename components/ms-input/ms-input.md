@@ -8,8 +8,8 @@
 <div :controller="doc-input-basic">
     <xmp is="ms-input" :widget="{col:'name',value:@value,isClear:@isClear_name,$rules:{required:true,message:'请输入名字'},onChange:@onChange_name}"></xmp>
     <xmp is="ms-input" :widget="{col:'pass',value:'',isClear:@isClear_pass, placeholder:'请输入密码', $rules:{required:true},onChange:@onChange_pass}"></xmp>
-    <button :click="@Clear_name">清除</button>
-    <button :click="@Clear_pass">清除</button>
+    <button :click="@Clear_name">清除1</button>
+    <button :click="@Clear_pass">清除2</button>
 </div>
 ```
 
