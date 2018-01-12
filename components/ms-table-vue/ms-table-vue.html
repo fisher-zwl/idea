@@ -3,12 +3,15 @@
         <ms-table-header 
             :class="['table-vue-table']" 
             :widget="{columns_data:@columns_data,
+                header_column:@header_column,
                 checkedAll:@checkedAll,
+                isdouble:@isdouble,
                 handleCheckAll:@handleCheckAll,
                 tableWidth:@tableWidth}">
         </ms-table-header>
     </div>
     <ms-table-body 
+        :css = "{top:@bodyTop}"
         :class="['ane-table-vue-body',@tableBodyClass]" 
         :widget="{table_data:@data,
             columns_data:@columns_data,
@@ -64,5 +67,5 @@
                 mouseenter_row:@mouseenter_row}">
         </ms-table-body>
     </div>
-    <div class="ane-table-vue-fixed-right-patch" :if="@fixedPatch"></div>
+    <div class="ane-table-vue-fixed-right-patch" :if="@fixedPatch" :css="@isdouble ?{height:@bodyTop}:''"></div>
 </div>  

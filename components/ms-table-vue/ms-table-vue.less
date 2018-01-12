@@ -48,6 +48,9 @@
         width: (@i * 100% / 100);
         display: inline-block;
     }
+    .col-double-@{i} {
+        width: (@i * 100% / 100);
+    }
     .generate-columns(@n, (@i + 1));
     }
 }

@@ -320,7 +320,6 @@ const vm_saika_scroll= avalon.define({
 vm_saika_scroll.fetch();
 ```
 
-
 ### 远程分页表格测试(vue)
 
 ```html
@@ -364,4 +363,82 @@ const vm_saika = avalon.define({
     }
 });
 vm_saika.fetch();
+```
+
+### 表格多行多列
+
+```html
+<div :controller="table-saika-double" :css="{'margin-bottom':'20px',height:330}">
+    <ms-table-vue :widget="{data:@remoteList,tableWidth:@tableWidth,loading:@loading,tableBorder:@tableBorder,onSelect:@onSelect,onSelectAll:@onSelectAll,actions:@actions,isdouble:@isdouble,bodyTop:@bodyTop}">
+        <ms-table-column :widget="{title:'',field:'id',width:10,type:'select',rowspan:3,colspan:1}"></ms-table-column>
+        <ms-table-column :widget="{title:'全国',field:'name',width:20,rowspan:3,colspan:1}"></ms-table-column>
+        <ms-table-column :widget="{title:'地区',field:'address',width:20,rowspan:3,colspan:1}"></ms-table-column>
+        <ms-table-column :widget="{title:'乡镇',field:'province',width:20,rowspan:1,colspan:2}">
+            <ms-table-column :widget="{title:'学校',field:'date',width:15,rowspan:2,colspan:1}"><span>hahhahhah</span></ms-table-column>
+            <ms-table-column :widget="{title:'政府',field:'statusTitle',width:5,rowspan:1,colspan:1}">
+                <ms-table-column :widget="{title:'公安',field:'statusTitle',width:5}"></ms-table-column>
+            </ms-table-column>
+        </ms-table-column>
+        <ms-table-column :widget="{title:'省会',field:'date',width:20,rowspan:3,colspan:1}"></ms-table-column>
+        <ms-table-column :widget="{title:'操作',field:'statusTitle',width:10,type:'operation',rowspan:3,colspan:1}">
+            <span>
+                <a :click="handle('search')" href="javascript:void(0)" :css="{marginRight:10}">查看</a>
+                <a :click="handle('delete')" href="javascript:void(0)" :css="{marginRight:10}">删除</a>
+                <a :click="handle('edit')" href="javascript:void(0)">编辑</a>
+            </span>
+        </ms-table-column>
+    </ms-table-vue>
+</div>
+```
+
+```js
+import * as avalon from 'avalon2';
+import * as $ from 'jquery';
+import { notification } from 'ane';
+
+const vm_saika_double = avalon.define({
+    $id: 'table-saika-double',
+    remoteList: [],
+    loading:false,
+    tableBorder:true,
+    tableWidth:2000,
+    isdouble:true,
+    bodyTop:104,
+    list: avalon.range(8).map(n => ({
+        id: n, name: '老狼' + n, address: '深山', province: '老林',date:'1514895537781',status:1,statusTitle:'在线'
+    })),
+    onSelect(record, selected, selectedRows) {
+        console.log(record, selected, selectedRows);
+    },
+    onSelectAll(selected, selectedRows) {
+        console.log(selected, selectedRows);
+    },
+    actions(type, text, record, index) {
+        console.log(type, text, record, index);
+        if (type == 'search') {
+            notification.success({
+                message: '查看数据',
+                title: '通知'
+            });
+        }
+        if (type == 'delete') {
+            notification.success({
+                message: '删除成功',
+                title: '通知'
+            });
+        }
+        if (type == 'edit') {
+            notification.success({
+                message: '编辑成功',
+                title: '通知'
+            });
+        }
+    },
+    fetch() {
+        this.loading = true;
+        this.remoteList = this.list;
+        this.loading = false;
+    }
+});
+vm_saika_double.fetch();
 ```

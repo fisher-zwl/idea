@@ -5,7 +5,7 @@ import './ms-table-header';
 import './ms-table-body';
 import './ms-table-footer';
 import {getColumn} from './ms-table-column';
-import {getChildValue} from './ms-table-util';
+import {getChildValue,getChildValue_double} from './ms-table-util';
 import '../ms-pagination/ms-pagination';
 import {
     findParentComponent,
@@ -18,6 +18,8 @@ avalon.component('ms-table-vue', {
         table_id:'',
         data: [],
         key: 'id',
+        isdouble:false,//是否表头是多列
+        header_column:[],
         columns_data:[],
         footer_data:[],
         loading:false,
@@ -26,6 +28,7 @@ avalon.component('ms-table-vue', {
         checkedAll:false,
         scrollWidth:0,
         tableWidth:100+'%',//表格的宽度
+        bodyTop:34,//表格内容上边距
         fixedLeft:false,//左侧固定
         fixedRight:false,//右侧固定
         fixed_bottom:1,//左右侧底部bottom
@@ -83,8 +86,17 @@ avalon.component('ms-table-vue', {
         onInit:function(event){
             let avalon_this = this;
             avalon_this.table_id = event.vmodel.$id;
-            console.log(event.vmodel.$id);
-            let columns = getChildValue(event.vmodel);
+            //console.log(event.vmodel);
+            let columns = [];
+            if(this.isdouble){
+                let row = getChildValue_double(event.vmodel);
+                columns = row[0];
+                console.log('JSON.stringify(columns)'+ columns);
+                row.shift();
+                avalon_this.header_column = row;
+            }else{
+                columns = getChildValue(event.vmodel);
+            }
             let columns_data = [];
             columns.forEach(function(column) {
                 columns_data.push(column.props);
@@ -92,7 +104,7 @@ avalon.component('ms-table-vue', {
                     avalon_this.key = column.props.field || avalon_this.key;
                 } 
             });
-            //console.log(columns);
+            console.log(columns_data);
             avalon_this.columns_data = columns_data;
             avalon_this.columns_data_left = [columns_data[0]];
             let len = columns_data.length-1;
@@ -154,3 +166,34 @@ function scrollFnc(avalon_this){//判断是否有垂直滚动条
         avalon_this.fixed_bottom = 1;
     }
 }
+
+let header_data = [
+    {"is":"ms-table-column","props":{"title":"","field":"id","width":10,"type":"select","rowspan":3,"colspan":1,"inlineTemplate":""},"inlineTemplate":""},
+    {"is":"ms-table-column","props":{"title":"全国","field":"name","width":20,"rowspan":3,"colspan":1,"inlineTemplate":""},"inlineTemplate":""},
+    {"is":"ms-table-column","props":{"title":"地区","field":"address","width":20,"rowspan":3,"colspan":1,"inlineTemplate":""},"inlineTemplate":""},
+    {
+        "is": "ms-table-column",
+        "props": {
+          "title": "乡镇",
+          "field": "province",
+          "width": 20,
+          "rowspan": 1,
+          "colspan": 2,
+          "inlineTemplate": "<ms-table-column :widget=\"{title:'学校',field:'date',width:10,rowspan:2,colspan:1}\"><span>hahhahhah</span></ms-table-column><ms-table-column :widget=\"{title:'政府',field:'statusTitle',width:10,rowspan:1,colspan:1}\"><ms-table-column :widget=\"{title:'公安',field:'statusTitle',width:10}\"></ms-table-column></ms-table-column>"},
+        "children":[
+            {"is":"ms-table-column","props":{"title":"'学校'","field":"'date'","width":"10","rowspan":"2","colspan":"1"}},
+            {
+                "props": {
+                  "title": "'政府'",
+                  "field": "'statusTitle'",
+                  "width": "10",
+                  "rowspan": "1",
+                  "colspan": "1"
+                },
+                "children":[{"is":"ms-table-column","props":{"title":"'公安'","field":"'statusTitle'","width":"10"}}]
+              }
+        ]
+    },
+    {"is":"ms-table-column","props":{"title":"省会","field":"date","width":20,"rowspan":3,"colspan":1,"inlineTemplate":""},"inlineTemplate":""},
+    {"is":"ms-table-column","props":{"title":"操作","field":"statusTitle","width":10,"type":"operation","rowspan":3,"colspan":1,"inlineTemplate":"<span><a :click=\"handle('search')\" href=\"javascript:void(0)\" :css=\"{marginRight:10}\">查看</a><a :click=\"handle('delete')\" href=\"javascript:void(0)\" :css=\"{marginRight:10}\">删除</a><a :click=\"handle('edit')\" href=\"javascript:void(0)\">编辑</a></span>"},"inlineTemplate":"<span><a :click=\"handle('search')\" href=\"javascript:void(0)\" :css=\"{marginRight:10}\">查看</a><a :click=\"handle('delete')\" href=\"javascript:void(0)\" :css=\"{marginRight:10}\">删除</a><a :click=\"handle('edit')\" href=\"javascript:void(0)\">编辑</a></span>"}
+]

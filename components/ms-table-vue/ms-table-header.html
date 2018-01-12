@@ -1,12 +1,20 @@
 <div>
     <table class="table-vue"  :css="{width:@tableWidth}">
         <thead>
-            <tr>
+            <tr :if="!@isdouble">
                 <th :for="el in @columns_data" :class="['col-'+ el.width]">
                     <span :if="@el.type == 'select'">
                         <ms-checkbox :widget="{checked:@checkedAll,onChange:@handleCheckAll}"></ms-checkbox>
                     </span>
                     <span>{{el.title}}</span>
+                </th>
+            </tr>
+            <tr :if="@isdouble" :for="($index,column) in @header_column">
+                <th :for="el in @column" :class="['col-double-'+ el.props.width]" :attr="{rowspan:el.props.rowspan,colspan:el.props.colspan}">
+                    <span :if="@el.props.type == 'select'">
+                        <ms-checkbox :widget="{checked:@checkedAll,onChange:@handleCheckAll}"></ms-checkbox>
+                    </span>
+                    <span>{{el.props.title}}</span>
                 </th>
             </tr>
         </thead>
