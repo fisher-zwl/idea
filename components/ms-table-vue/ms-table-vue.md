@@ -41,6 +41,7 @@ const vm_saika_1 = avalon.define({
 });
 vm_saika_1.fetch();
 ```
+
 ### 带边框表格
 带边框表格
 
@@ -82,6 +83,49 @@ const vm_saika_border = avalon.define({
 });
 vm_saika_border.fetch();
 ```
+
+### 有title属性弹窗表格
+
+    表格默认是没有title属性，如果有需要只加个isTitle为true即可，不过如果是外加进入的数值必须采用属性tdval和rel属性，见下例子
+```html
+<div :controller="table-saika-title" :css="{'margin-bottom':'20px',height:376}">
+    <ms-table-vue :widget="{data:@remoteList,loading:@loading,tableBorder:@tableBorder,isTitle:@isTitle}">
+        <ms-table-column :widget="{title:'序号',field:'id',width:10}"><span>{{record.id+1}}</span></ms-table-column>
+        <ms-table-column :widget="{title:'日期',field:'date',width:20}"><span>{{record.date|date("yyyy-MM-dd")}}</span></ms-table-column>
+        <ms-table-column :widget="{title:'地址',field:'name',width:20}"></ms-table-column>
+        <ms-table-column :widget="{title:'省份',field:'address',width:20}"></ms-table-column>
+        <ms-table-column :widget="{title:'名称',field:'province',width:20}"><span tdval="wo hen shuai" rel="drevil">wo hen shuai</span></ms-table-column>
+        <ms-table-column :widget="{title:'状态',field:'statusTitle',width:10}">
+            <span :css="{color: record.status ? 'red':'' }">{{record.statusTitle}}</span>
+        </ms-table-column>
+    </ms-table-vue>
+</div>
+```
+
+```js
+import * as avalon from 'avalon2';
+import * as $ from 'jquery';
+import { message } from 'ane';
+
+const vm_saika_title = avalon.define({
+    $id: 'table-saika-title',
+    remoteList: [],
+    loading:false,
+    isTitle:true,
+    tableBorder:true,//带边框表格
+    list: avalon.range(10).map(n => ({
+        id: n, name: '老狼' + n, address: '深山', province: '老林',date:'1514895537781',status:1,statusTitle:'在线'
+    })),
+     fetch(params = {}) {
+        this.loading = true;
+        this.remoteList = this.list;
+        //console.log(this.list);
+        this.loading = false;
+    }
+});
+vm_saika_title.fetch();
+```
+
 
 ### hover事件
 

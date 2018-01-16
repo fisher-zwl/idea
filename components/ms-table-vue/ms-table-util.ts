@@ -1,5 +1,6 @@
 import * as avalon from 'avalon2';
 import * as $ from 'jquery';
+import 'bootstrap';
 
 export function getChildValue(vmodel, render = vmodel.$render): any[] {
     if (render.directives === undefined) {
@@ -78,6 +79,40 @@ export function getChildValue_double(vmodel, render = vmodel.$render): any[] {
         acc = [renderColumn,one,two,three];
         return acc;
     }, []);
+}
+
+export function popover(){//title的bootstrap tooltip
+    var timer;
+    $("[rel=drevil]").popover({  
+        trigger:'manual',
+        container: 'body',
+        placement : 'top',
+        //delay:{ show: 5000},
+        //viewport:{selector: 'body',padding:0},
+        //title : '<div style="font-size:14px;">title</div>',  
+        html: 'true',  
+        content: function() { 
+            return '<div class="title-content">'+ $(this).attr('tdval') +'</div>';  
+        },  
+        animation: false  
+    }).on("mouseenter", function () {  
+        var _this = this;
+        timer = setTimeout(function(){
+            $('div').siblings(".popover").popover("hide"); 
+            $(_this).popover("show");
+        },1000);
+        $(_this).siblings(".popover").on("mouseleave", function () {  
+            $(_this).popover('hide'); 
+        });
+    }).on("mouseleave", function () {  
+        var _this = this;
+        clearTimeout(timer);  
+        setTimeout(function () {  
+            if (!$(".popover:hover").length) {  
+                $(_this).popover("hide");  
+            }  
+        }, 100);  
+    }); 
 }
 
 function getChildNode(str){

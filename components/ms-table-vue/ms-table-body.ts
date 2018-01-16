@@ -8,6 +8,7 @@ avalon.component('ms-table-body', {
         tableWidth:100+'%',
         checked:[],
         key:'id',
+        isTitle:false,
         mouseenter_row:'',//保存hover事件的行index
         handleMouseenter:avalon.noop,
         handleMouseLeave:avalon.noop,

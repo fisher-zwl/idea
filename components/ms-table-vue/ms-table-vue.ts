@@ -5,7 +5,7 @@ import './ms-table-header';
 import './ms-table-body';
 import './ms-table-footer';
 import {getColumn} from './ms-table-column';
-import {getChildValue,getChildValue_double} from './ms-table-util';
+import {getChildValue,getChildValue_double,popover} from './ms-table-util';
 import '../ms-pagination/ms-pagination';
 import {
     findParentComponent,
@@ -23,6 +23,7 @@ avalon.component('ms-table-vue', {
         columns_data:[],
         footer_data:[],
         loading:false,
+        isTitle:false,
         checked: [],
         selection: [],
         checkedAll:false,
@@ -110,9 +111,16 @@ avalon.component('ms-table-vue', {
             let len = columns_data.length-1;
             avalon_this.columns_data_right = [columns_data[len]];
             this.$watch('data', (v) => {
-
+                avalon_this.checkedAll = false;
+                avalon_this.checked.clear();
+                avalon_this.selection.clear();
+                popover();
             });
             this.$watch('data.length', v => {
+                avalon_this.checkedAll = false;
+                avalon_this.checked.clear();
+                avalon_this.selection.clear();
+                popover();
             });
             this.$watch('loading', v => {
                 if(v){
@@ -139,6 +147,7 @@ avalon.component('ms-table-vue', {
                 $('#'+avalon_this.table_id).children().find('.ane-table-vue-fixedLeft-body').scrollTop($(this).scrollTop());
                 $('#'+avalon_this.table_id).children().find('.ane-table-vue-fixedRight-body').scrollTop($(this).scrollTop());
             });
+            popover();
         },
         onReady: function(event) {
             let avalon_this = this;
