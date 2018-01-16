@@ -31,8 +31,14 @@ const vm = avalon.define({
         this.tips_error_pass = true;
     },
     onChange_name(e){
+        if(e.target.value){
+            this.tips_error_name = false;
+        }
     },
     onChange_pass(e){
+        if(e.target.value){
+            this.tips_error_pass = false;
+        }
     }
 });
 ```

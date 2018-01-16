@@ -16,6 +16,7 @@ controlComponent.extend({
         success_color:'#536C80',
         tips_clear:true,
         tips_error:false,
+        x_show:false,
         mapValueToText(value) {
             this.text = value;
         },
@@ -28,6 +29,12 @@ controlComponent.extend({
             });
             $(".ane-input-tips input[name="+this.col +"]").focus();
             return false;
+        },
+        blur(){
+            this.x_show = false;
+        },
+        focus(){
+            this.x_show = true;
         },
         onInit: function (event) {
             emitToFormItem(this);
