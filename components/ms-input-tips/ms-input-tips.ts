@@ -1,21 +1,23 @@
 import * as avalon from 'avalon2';
+import * as $ from 'jquery';
+import 'bootstrap';
 import controlComponent from '../ms-form/ms-control';
 import { emitToFormItem } from '../ms-form/utils';
 import { findParentComponent } from '../../ane-util';
 
 controlComponent.extend({
-    displayName: 'ms-input',
-    template: require('./ms-input.html'),
+    displayName: 'ms-input-tips',
+    template: require('./ms-input-tips.html'),
     defaults: {
         text: '',
         type: 'input', 
         disabled: false,
-        isClear:false,
+        error_color:'#d2403d',
+        success_color:'#536C80',
+        tips_clear:true,
+        tips_error:false,
         mapValueToText(value) {
             this.text = value;
-        },
-        clearValue(){
-            this.text = '';
         },
         handleClear(){
             this.mapValueToText('');
@@ -24,6 +26,8 @@ controlComponent.extend({
                 denyValidate: true,
                 type: 'changed'
             });
+            $(".ane-input-tips input[name="+this.col +"]").focus();
+            return false;
         },
         onInit: function (event) {
             emitToFormItem(this);
@@ -34,17 +38,6 @@ controlComponent.extend({
                     denyValidate: true,
                     type: 'changed'
                 });
-            });
-            let avalon_this = this;
-            this.$watch('isClear',function(v){
-                if(v){
-                    this.mapValueToText('');
-                    this.handleChange({
-                        target: { value: '' },
-                        denyValidate: true,
-                        type: 'changed'
-                    });
-                }
             });
             this.mapValueToText(this.value);
         }

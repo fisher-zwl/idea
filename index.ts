@@ -10,6 +10,7 @@ import './components/ms-dialog';
 import './components/ms-form';
 export { createForm } from './components/ms-form/create-form';
 import './components/ms-input';
+import './components/ms-input-tips';
 import './components/ms-textarea';
 import './components/ms-select';
 import './components/ms-upload';

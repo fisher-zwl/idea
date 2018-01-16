@@ -28,6 +28,15 @@ module.exports = [{
                 resolve(require('../components/ms-input/ms-input.md'));
             });
         }
+    },{
+        key: 'component-demo-input-input-tips',
+        title: 'input-tips(带×) 输入框',
+        uri: '/input-tips',
+        location: function (resolve) {
+            require.ensure([], function () {
+                resolve(require('../components/ms-input-tips/ms-input-tips.md'));
+            });
+        }
     }, {
         key: 'component-demo-textarea-textarea',
         title: 'textarea 多行输入框',

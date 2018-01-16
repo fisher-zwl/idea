@@ -1,0 +1,4 @@
+<div class="ane-input-tips" :class="@tips_error ? 'has-error':''">
+    <input type="text" class="form-control" :duplex="@text" :attr="{name:@col,placeholder:@placeholder,type:@type,disabled:@disabled,title:@text}" :css="{width:@width}" data-duplex-changed="@handleChange">
+    <i :if="@tips_clear" class="fa fa-times ane-input-tips-clear" :css="{color: @tips_error ? @error_color : @success_color}" :mousedown="@handleClear"></i>
+</div>
