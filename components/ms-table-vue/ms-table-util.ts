@@ -123,6 +123,7 @@ function getChildNode(str){
     strKey.forEach(function(val){
         let key = val.split(':')[0];
         let title = val.split(':')[1];
+        title = title.replace(/^\'|\'$/g,'');
         obj[key] = title;
     });
     return obj;
