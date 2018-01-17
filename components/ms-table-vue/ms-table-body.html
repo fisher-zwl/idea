@@ -5,7 +5,7 @@
                 <td :for="el in @columns_data" :class="['col-'+ el.width]">
                     <span :if="(!el.inlineTemplate )&& (el.type != 'select')" :attr="@isTitle && record[el.field] ? {rel:'drevil',tdval:record[el.field]}:''" :html="record[el.field] ? record[el.field] : '-'"></span>
                     <span :if="el.type == 'select'">
-                            <ms-checkbox :widget="{checked:@checked.indexOf(record[@key])!=-1,onChange:function(){@handleCheck(arguments[0].target.checked,record)}}"></ms-checkbox>
+                            <ms-table-checkbox :widget="{checked:@checked.indexOf(record[@key])!=-1,onChange:function(){@handleCheck(arguments[0].target.checked,record)}}"></ms-table-checkbox>
                     </span>
                     <span :if="(el.inlineTemplate) && (el.type == 'operation')" :html="@operationTranslate(el.inlineTemplate)"></span>
                     <span :if="(el.inlineTemplate) && (el.type != 'operation')" :html="el.inlineTemplate"></span>

@@ -84,7 +84,7 @@ const vm_saika_border = avalon.define({
 vm_saika_border.fetch();
 ```
 
-### 有title属性弹窗表格
+### 有title属性可复制性表格
 
     表格默认是没有title属性，如果有需要只加个isTitle为true即可，不过如果是外加进入的数值必须采用属性tdval和rel属性，见下例子
 ```html

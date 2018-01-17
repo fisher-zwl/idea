@@ -1,9 +1,10 @@
 import * as avalon from 'avalon2';
-import '../ms-checkbox/ms-checkbox';
+//import '../ms-checkbox/ms-checkbox';
 import * as $ from 'jquery';
 import './ms-table-header';
 import './ms-table-body';
 import './ms-table-footer';
+import './ms-table-checkbox';
 import {getColumn} from './ms-table-column';
 import {getChildValue,getChildValue_double,popover} from './ms-table-util';
 import '../ms-pagination/ms-pagination';

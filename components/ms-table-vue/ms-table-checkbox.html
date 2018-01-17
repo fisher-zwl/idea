@@ -1,0 +1,12 @@
+<div :class="@wrapper" class="ane-table-checkbox" style="margin-top: 0; margin-bottom: 0;">
+    <label class="ane-table-checkbox-inner ane-table-checkbox-inner-ie" :class="@checked ? 'ane-table-checkbox-checked':'ane-table-checkbox-check'">
+        <input type="checkbox"
+            :class="[@indeterminate?'ane-table-checkbox-indeterminate':'']"
+            :attr="{id:@helpId,disabled:@disabled}"
+            :duplex-checked="@checked"
+            data-duplex-changed="@onChange"
+            />
+        <span class="text" :class="@checked ? 'checked':'check'"></span>
+    </label>
+    <label :attr="{'for':@helpId}" style="padding-left: 0;" :css="{marginRight:@group?8:0}"><slot /></label>
+</div>

@@ -1,0 +1,54 @@
+@import '../../styles/index';
+@checkbox-prefix-cls: ~"@{ane-prefix}-table-checkbox";
+
+.@{checkbox-prefix-cls} {
+    display: inline;
+    padding-left: 0;
+
+    label {
+        font-weight: 400;
+        font-size: 13px;
+        vertical-align: middle;
+    }
+
+    input[type=checkbox] {
+        opacity: 0;
+        position: absolute;
+        left: -9999px;
+        z-index: 12;
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+
+    input[type=checkbox]+.check{
+        position: relative;
+        z-index: 11;
+        display: inline-block;
+        margin: 0;
+        line-height: 12px;
+        min-height: 12px;
+        min-width: 12px;
+        margin-left: 10px;
+        margin-right: 10px;
+        font-weight: 400;
+        background-image: url("./img/ane-table-vue-no.png");
+        background-repeat: no-repeat;
+    }
+    input[type=checkbox]+.checked{
+        position: relative;
+        z-index: 11;
+        display: inline-block;
+        margin: 0;
+        line-height: 12px;
+        min-height: 12px;
+        min-width: 12px;
+        font-weight: 400;
+        background-image: url("./img/ane-table-vue-yes.png");
+        background-repeat: no-repeat;
+    }
+
+    label.ane-table-checkbox-inner {
+        padding-left: 0;
+    }
+}
