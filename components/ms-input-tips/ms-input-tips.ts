@@ -16,7 +16,12 @@ controlComponent.extend({
         success_color:'#536C80',
         tips_clear:true,
         tips_error:false,
+        tips_html:'',
+        tips_prompt:false,
+        tips_blur:avalon.noop,
+        tips_focus:avalon.noop,
         x_show:false,
+        prompt_show:false,
         mapValueToText(value) {
             this.text = value;
         },
@@ -31,10 +36,16 @@ controlComponent.extend({
             return false;
         },
         blur(){
-            this.x_show = false;
+            if(!this.tips_error){
+                this.x_show = false;
+                this.prompt_show = false;
+            }
+            this.tips_blur(this.text);
         },
         focus(){
             this.x_show = true;
+            this.prompt_show = true;
+            this.tips_focus();
         },
         onInit: function (event) {
             emitToFormItem(this);
@@ -45,6 +56,13 @@ controlComponent.extend({
                     denyValidate: true,
                     type: 'changed'
                 });
+            });
+            var avalon_this = this;
+            this.$watch('tips_error', v => {
+                if(v){
+                    avalon_this.x_show = true;
+                    avalon_this.prompt_show = true;
+                }
             });
             this.mapValueToText(this.value);
         }
