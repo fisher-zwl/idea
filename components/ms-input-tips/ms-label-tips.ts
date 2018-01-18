@@ -4,8 +4,8 @@
  * 
  * @example
  * ``` html
- * <ms-label-tips :widget="{label: '标题',}">
-        <ms-input-tips :widget="{value: @title, col: 'title',iconClass:'fa fa-exclamation-circle',icon_html:'<span>*</span>'}"></ms-input-tips>
+ * <ms-label-tips :widget="{label: '标题',iconClass:'fa fa-exclamation-circle',icon_html:'<span>*</span>'}">
+        <ms-input-tips :widget="{value: @title, col: 'title'}"></ms-input-tips>
     </ms-label-tips>
  * ```
  */

@@ -115,12 +115,12 @@ const vm = avalon.define({
     <ms-label-tips :widget="{label:'帅爆了:',iconClass:'fa fa-exclamation-circle',icon_html:'<span>*</span>'}">
         <ms-input-tips
             :widget="{
-                col:'name',
-                tips_error:@tips_error_name,
+                col:'label',
+                tips_error:@tips_error_label,
                 error_color:'#d2403d',
-                tips_html:@tips_html_name,
+                tips_html:@tips_html_label,
                 tips_prompt:true,
-                onChange:@onChange_name}">
+                onChange:@onChange_label}">
         </ms-input-tips>
     </ms-label-tips>
 </div>
@@ -142,18 +142,7 @@ const vm_label = avalon.define({
     tips_focus(){
         console.log('光标已聚焦');
     },
-    sumbit_name(){
-        if(!this.name){
-            this.tips_error_name = true;
-            this.tips_html_name = '请输入账号';
-        }else{
-            notification.success({
-                message: '提交账号成功',
-                title: '通知'
-            });
-        }
-    },
-    onChange_name(e){
+    onChange_label(e){
         if(/[^0-9a-zA-Z\u4e00-\u9fa5]/.test(e.target.value)){
             this.tips_html_name = '请输入正确账号格式';
             this.tips_error_name = true;
