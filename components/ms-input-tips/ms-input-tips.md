@@ -107,9 +107,70 @@ const vm = avalon.define({
 });
 ```
 
+
+### 带label的input
+
+``` html
+<div :controller="doc-input-label">
+    <ms-label-tips :widget="{label:'帅爆了:',iconClass:'fa fa-exclamation-circle',icon_html:'<span>*</span>'}">
+        <ms-input-tips
+            :widget="{
+                col:'name',
+                tips_error:@tips_error_name,
+                error_color:'#d2403d',
+                tips_html:@tips_html_name,
+                tips_prompt:true,
+                onChange:@onChange_name}">
+        </ms-input-tips>
+    </ms-label-tips>
+</div>
+```
+
+``` js
+import * as avalon from 'avalon2';
+import 'ane';
+import {notification} from 'ane';
+
+const vm_label = avalon.define({
+    $id: 'doc-input-label',
+    name:'',
+    tips_error_name:false,
+    tips_html_name:'账号支持数字、字母、汉字',
+    tips_blur(text){
+        console.log('光标已经移除:'+ text);
+    },
+    tips_focus(){
+        console.log('光标已聚焦');
+    },
+    sumbit_name(){
+        if(!this.name){
+            this.tips_error_name = true;
+            this.tips_html_name = '请输入账号';
+        }else{
+            notification.success({
+                message: '提交账号成功',
+                title: '通知'
+            });
+        }
+    },
+    onChange_name(e){
+        if(/[^0-9a-zA-Z\u4e00-\u9fa5]/.test(e.target.value)){
+            this.tips_html_name = '请输入正确账号格式';
+            this.tips_error_name = true;
+        }else{
+            this.tips_html_name = '账号支持数字、字母、汉字';
+            this.tips_error_name = false;
+        }
+        this.name = e.target.value;
+    }
+});
+```
+
+
 ### 组件参数
 （注意：区分于ms-input组件，在于ms-input-tips自带×清除数据功能）
 
+#### ms-input-tips组件参数
 input样式字段：
 | 参数 | 说明 | 类型 | 默认值 |
 |-----|-----|-----|-----|
@@ -132,5 +193,14 @@ input事件函数
 |-----|-----|-----|-----|
 | tips_blur | input光标焦点消失触发 | function | text（焦点消失的input值） |
 | tips_focus | input光标聚焦时触发 | function | 无 |
+
+
+#### ms-label-tips参数
+| 参数 | 说明 | 类型 | 默认值 |
+|-----|-----|-----|-----|
+| label | label标题 | string | '' |
+| iconClass | label中插入的图标等元素类名 | string | '' |
+| icon_html | label中插入除标题之外的html代码 | string | '' |
+
 
 > 继承 [ms-control 组件](#!/form-control) 的所有参数
