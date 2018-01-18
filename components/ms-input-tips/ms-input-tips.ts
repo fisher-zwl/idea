@@ -26,9 +26,10 @@ controlComponent.extend({
             this.text = value;
         },
         handleClear(){
+            var avalon_this = this;
             this.mapValueToText('');
             this.handleChange({
-                target: { value: '' },
+                target: { value: '',name:avalon_this.col},
                 denyValidate: true,
                 type: 'changed'
             });
