@@ -1,0 +1,45 @@
+@import '../../styles/index';
+@table-prefix-cls: ~"@{ane-prefix}-ie8-table";
+.@{table-prefix-cls} {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin-bottom: 5px;
+    border-width: 1px 1px 1px 1px;
+    border-color: #E5EAEF;
+    border-style: solid;
+    font-size: 12px;
+    line-height: 13px;
+
+    .ie8-table-fixed-thead{
+        width: 100%;
+        table{
+            width: 100%;
+            thead > tr > th{
+                border-color: #B7C3CA;
+                border-width: 1px 1px 1px 1px;
+                border-style: solid;
+            }
+        }
+    }
+    .ie8-table-fixed-tbody{
+        width: 100%;
+        position: absolute;
+        top:34px;
+        overflow: auto;
+        bottom: 0px;
+        table{
+            width: 100%;
+            tbody> tr> td{
+                border-color: #E5EAEF;
+                border-width: 1px 1px 1px 1px;
+                border-style: solid;
+            }
+        }
+    }
+    table> thead > tr > th,table> tbody> tr> td{
+        padding: 10px 12px;
+        border-width: 0 1px 1px 0;
+        border-style: solid;
+    }
+}
