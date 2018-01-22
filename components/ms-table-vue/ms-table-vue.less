@@ -6,13 +6,49 @@
     height: 100%;
     width: 100%;
     overflow: hidden;
-    // border-left: 1px solid #a5b4bd;
-    // border-bottom: 1px solid #a5b4bd;
 
     &-header {
         //width: 100%;
         overflow: hidden;
         height: auto;
+
+        .table-vue .caret-wrapper{
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            height: 34px;
+            width: 24px;
+            vertical-align: middle;
+            cursor: pointer;
+            overflow: initial;
+            position: relative;
+            //padding-top: 4px;
+        }
+
+        .table-vue .sort-caret{
+            width: 0;
+            height: 10px;
+            border: 5px solid transparent;
+            position: absolute;
+            left: 7px;
+        }
+        .table-vue .asc .ascending{
+            border-bottom-color: #409eff;
+        }
+        .table-vue .desc .descending{
+            border-top-color: #409eff;
+        }
+        .table-vue .ascending{
+            border-bottom-color: #c0c4cc;
+            top: 5px;
+        }
+        .table-vue .descending{
+            border-top-color: #c0c4cc;
+            bottom: 7px;
+        }
+        .table-vue .custom-sort{
+            cursor: pointer;
+        }
     }
 
     &-body{

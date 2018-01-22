@@ -48,6 +48,7 @@ avalon.component('ms-table-vue', {
         onSelect: avalon.noop,
         onSelectAll: avalon.noop,
         selectionChange: avalon.noop,
+        handleSort:avalon.noop,
         handleMouseenter(row){//鼠标移进的事件
             this.mouseenter_row = row;
         },
@@ -93,9 +94,12 @@ avalon.component('ms-table-vue', {
             if(this.isdouble){
                 let row = getChildValue_double(event.vmodel);
                 columns = row[0];
-                console.log('JSON.stringify(columns)'+ columns);
                 row.shift();
-                avalon_this.header_column = row;
+                row.forEach(element =>{
+                    if(element.length > 0){
+                        avalon_this.header_column.push(element);
+                    }
+                });
             }else{
                 columns = getChildValue(event.vmodel);
             }
@@ -106,7 +110,7 @@ avalon.component('ms-table-vue', {
                     avalon_this.key = column.props.field || avalon_this.key;
                 } 
             });
-            console.log(columns_data);
+            //console.log(columns_data);
             avalon_this.columns_data = columns_data;
             avalon_this.columns_data_left = [columns_data[0]];
             let len = columns_data.length-1;

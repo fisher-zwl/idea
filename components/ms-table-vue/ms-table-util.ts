@@ -2,7 +2,7 @@ import * as avalon from 'avalon2';
 import * as $ from 'jquery';
 import 'bootstrap';
 
-export function getChildValue(vmodel, render = vmodel.$render): any[] {
+export function getChildValue(vmodel, render = vmodel.$render): any[] {//单行表头
     if (render.directives === undefined) {
         return [];
     }
@@ -19,66 +19,84 @@ export function getChildValue(vmodel, render = vmodel.$render): any[] {
     }, []);
 }
 
-export function getChildValue_double(vmodel, render = vmodel.$render): any[] {
+export function getChildValue_double(vmodel, render = vmodel.$render): any[] {//多行表头
     if (render.directives === undefined) {
         return [];
     }
     let one = [],
         two = [],
         three = [],
-        renderColumn = [];
+        renderColumn = [],
+        arr=[];
+    for(let i = 0; i < 5;i++){//可支持4行表格表头
+        arr[i] = [];
+    }
     return render.directives.reduce((acc, action) => {
         if (action.is === 'ms-table-column') {
-            one.push({
+            arr[1].push({
                 is: action.is,
                 props: avalon.mix(true,action.value, {'inlineTemplate':action.fragment}),
                 inlineTemplate: action.fragment
             });
-            if(action.node.children.length > 0){
-                action.node.children.forEach(function(element){
-                    if(element.nodeName == 'ms-table-column'){
-                        let oneJect = getChildNode(element.props[':widget']);
-                        two.push({
-                            props: oneJect
-                        });
-                        element.children.forEach(function(el){
-                            if(el.nodeName == 'ms-table-column'){
-                                let twoJect = getChildNode(el.props[':widget']);
-                                three.push({
-                                    props: twoJect
-                                });
-                                renderColumn.push({
-                                    is: el.nodeName,
-                                    props:  twoJect,
-                                    //inlineTemplate: action.fragment
-                                });
-                            }else{
-                                renderColumn.push({
-                                    is: element.nodeName,
-                                    props:  oneJect,
-                                    //inlineTemplate: action.fragment
-                                });
-                            }
-                        });
-                    }else{
-                        renderColumn.push({
-                            is: action.is,
-                            props: avalon.mix(true,action.value, {'inlineTemplate':action.fragment}),
-                            inlineTemplate: action.fragment
-                        });
-                    }
-                });
+            let children = action.node.children,
+                t = 2,
+                temp = [];
+            let columns = {
+                is: action.is,
+                props: avalon.mix(true,action.value, {'inlineTemplate':action.fragment}),
+                inlineTemplate: action.fragment
+            };
+            if(children.length > 0){
+                getChildObject(columns,children,t,arr);
             }else{
-                renderColumn.push({
+                arr[0].push({
                     is: action.is,
                     props: avalon.mix(true,action.value, {'inlineTemplate':action.fragment}),
                     inlineTemplate: action.fragment
                 });
             }
         }
-        acc = [renderColumn,one,two,three];
+        acc = arr;
         return acc;
     }, []);
+}
+function getChildObject(columns,val,i,item){
+    val.forEach(function(element){
+        if(element.nodeName == 'ms-table-column'){
+            let oneJect = getChildNode(element.props[':widget']);
+            item[i].push({
+                is: 'ms-table-column',
+                props: oneJect,
+                inlineTemplate: '',
+            });
+            let columns = {
+                is: 'ms-table-column',
+                props: oneJect,
+                inlineTemplate: '',
+            }
+            if(element.children.length > 0){
+                if(element.children[0].nodeName == 'span'){
+                    columns.inlineTemplate = element.children[0].dom.outerHTML;
+                }
+                let t = i+1;
+                getChildObject(columns,element.children,t,item);
+            }else{
+                item[0].push({
+                    is: 'ms-table-column',
+                    props: avalon.mix(true,columns.props, {'inlineTemplate':columns.inlineTemplate}),
+                    inlineTemplate: columns.inlineTemplate,
+                });
+                return false;
+            }
+        }else{
+            item[0].push({
+                is: columns.is,
+                props: avalon.mix(true,columns.props, {'inlineTemplate':columns.inlineTemplate}),
+                inlineTemplate: columns.inlineTemplate,
+            });
+            return false;
+        }
+    });
 }
 
 export function popover(){//title的bootstrap tooltip
@@ -112,6 +130,10 @@ export function popover(){//title的bootstrap tooltip
                 $(_this).popover("hide");  
             }  
         }, 100);  
+    }).on('shown.bs.popover', function () {
+        $('.popover').mouseleave(function(){
+            $('.popover').hide();
+        });
     }); 
 }
 
@@ -119,7 +141,6 @@ function getChildNode(str){
     let regex = /([^{}](?=.*})(?!.*{))+/;
     let  obj = {};
     let strKey = regex.exec(str)[0].split(',');
-    //console.log();
     strKey.forEach(function(val){
         let key = val.split(':')[0];
         let title = val.split(':')[1];
@@ -129,27 +150,23 @@ function getChildNode(str){
     return obj;
 }
 
-function getObject(){
-
-}
-
-/**
- * 获取 td 元素，即单元格
- * @param event 触发的事件
- * @returns {*} td 元素 或者 null
- */
-export const getCell = function(event) {
-    let cell = event.target;
+// /**
+//  * 获取 td 元素，即单元格
+//  * @param event 触发的事件
+//  * @returns {*} td 元素 或者 null
+//  */
+// export const getCell = function(event) {
+//     let cell = event.target;
   
-    while (cell && cell.tagName.toUpperCase() !== 'HTML') {
-      if (cell.tagName.toUpperCase() === 'TD') {
-        return cell;
-      }
-      cell = cell.parentNode;
-    }
+//     while (cell && cell.tagName.toUpperCase() !== 'HTML') {
+//       if (cell.tagName.toUpperCase() === 'TD') {
+//         return cell;
+//       }
+//       cell = cell.parentNode;
+//     }
   
-    return null;
-  };
+//     return null;
+//   };
 
 //移除类函数
 // export function removeClass(el,cls){
