@@ -1,13 +1,10 @@
 <div>
-    <table class="table-vue">
-        <template>
-            <colgroup span="@columns_data.length">
-                <col :for="el in @columns_data" width="100px"></col>
-            </colgroup>
-        </template>
+    <table class="table-vue" :css="{width:@tableWidth}">
         <tbody>
-            <tr :for="el in @footer_data">
-                <tb :for="el in @columns_data" :css="{width:el.width,display:'inline-block'}">{{el.field}}</tb>
+            <tr :for="($index,record) in footer_data">
+                <tb :for="el in record" :class="['col-'+ el.width]" :attr="{colspan:@el.colspan}">
+                    <div>{{el.field}}</div>
+                </tb>
             </tr>
         </tbody>
     </table>

@@ -12,7 +12,7 @@
         </ms-table-header>
     </div>
     <ms-table-body 
-        :css = "{top:@bodyTop}"
+        :css = "{top:@bodyTop,bottom:@bodyBottom }"
         :class="['ane-table-vue-body',@tableBodyClass]" 
         :widget="{table_data:@data,
             columns_data:@columns_data,
@@ -26,11 +26,11 @@
             handleMouseLeave:@handleMouseLeave,
             mouseenter_row:mouseenter_row}">
     </ms-table-body>
-    <ms-table-footer 
-        :if="" 
-        :class="['ane-table-vue-footer']" 
-        :widget="{footer_data:[],columns_data:@columns_data}" :css="{paddingRight:@scrollWidth}">
-    </ms-table-footer>
+    <div class="ane-table-vue-footer" :if="@footer_show" :css="{paddingRight:@scrollWidth}">
+        <ms-table-footer 
+            :widget="{footer_data:@footer_data}">
+        </ms-table-footer>
+    </div>
     <div class="ane-table-vue-fixed-left" 
         :if="@fixedLeft" 
         :class="@is_scrollLeft ? 'is-scroll-left':''" 

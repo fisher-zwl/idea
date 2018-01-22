@@ -28,9 +28,11 @@ avalon.component('ms-table-vue', {
         checked: [],
         selection: [],
         checkedAll:false,
+        footer_show:false,
         scrollWidth:0,
         tableWidth:100+'%',//表格的宽度
         bodyTop:34,//表格内容上边距
+        bodyBottom:0,
         fixedLeft:false,//左侧固定
         fixedRight:false,//右侧固定
         fixed_bottom:1,//左右侧底部bottom
