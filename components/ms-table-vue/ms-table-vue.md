@@ -542,6 +542,8 @@ vm_saika_sort.fetch();
 
 
 ### 表格footer合计行
+
+    合计行：footer_show为true，footer_data底部数据，bodyBottom底部绝对定位的bottom
     
 ```html
 <div :controller="table-saika-footer" :css="{'margin-bottom':'20px',height:376}">
@@ -595,4 +597,57 @@ const vm_saika_footer = avalon.define({
     }
 });
 vm_saika_footer.fetch();
+```
+
+### 表格footer概要行
+    
+    概要行，只是在合计行的基础上，修改colspan的数据即可
+```html
+<div :controller="table-saika-footer-outline" :css="{'margin-bottom':'20px',height:376}">
+    <ms-table-vue :widget="{data:@remoteList,loading:@loading,tableBorder:@tableBorder,handleSort:@handleSort,footer_show:true,bodyBottom:34,footer_data:@footer_data}">
+        <ms-table-column :widget="{title:'序号',field:'id',width:10,sort:'default',default_sort:'asc'}"><span>{{record.id+1}}</span></ms-table-column>
+        <ms-table-column :widget="{title:'日期',field:'date',width:20,sort:'default',default_sort:'desc'}"><span>{{record.date|date("yyyy-MM-dd")}}</span></ms-table-column>
+        <ms-table-column :widget="{title:'地址',field:'name',width:20,sort:'default'}"></ms-table-column>
+        <ms-table-column :widget="{title:'省份',field:'address',width:20,sort:'custom',custom_sortClass:'fa fa-sort-alpha-desc'}"></ms-table-column>
+        <ms-table-column :widget="{title:'名称',field:'province',width:20}"><span>wo hen shuai</span></ms-table-column>
+        <ms-table-column :widget="{title:'状态',field:'statusTitle',width:10}">
+            <span :css="{color: record.status ? 'red':'' }">{{record.statusTitle}}</span>
+        </ms-table-column>
+    </ms-table-vue>
+</div>
+```
+
+```js
+import * as avalon from 'avalon2';
+import * as $ from 'jquery';
+import { notification } from 'ane';
+
+const vm_saika_outline = avalon.define({
+    $id: 'table-saika-footer-outline',
+    remoteList: [],
+    footer_data:[],
+    loading:false,
+    tableBorder:true,//带边框表格
+    list: avalon.range(10).map(n => ({
+        id: n, name: '老狼' + n, address: '深山', province: '老林',date:'1514895537781',status:1,statusTitle:'在线'
+    })),
+     fetch(params = {}) {
+        this.loading = true;
+        this.remoteList = this.list;
+        this.footer_data = [
+            [
+                {field:'概要',width:10,colspan:1},
+                {field:'skdksjkdjskdjksjdklsjdkljaklsdjlkajdklajdkjaskdlsjkldjkajdsklajdsklajsdldljskdjkslajdkjakdjaldjaklsdjdwseds',width:90,colspan:5}
+            ]
+        ]
+        this.loading = false;
+    },
+    handleSort(field,type){
+        notification.success({
+            message: '字段：'+field+'将进行'+type,
+            title: '通知'
+        });
+    }
+});
+vm_saika_outline.fetch();
 ```
