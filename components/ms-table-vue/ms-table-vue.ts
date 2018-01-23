@@ -23,6 +23,7 @@ avalon.component('ms-table-vue', {
         header_column:[],
         columns_data:[],
         footer_data:[],
+        table_footer_data:[],
         loading:false,
         isTitle:false,
         checked: [],
@@ -123,6 +124,7 @@ avalon.component('ms-table-vue', {
                 avalon_this.selection.clear();
                 popover();
             });
+            avalon_this.table_footer_data = avalon_this.footer_data;
             this.$watch('data.length', v => {
                 avalon_this.checkedAll = false;
                 avalon_this.checked.clear();

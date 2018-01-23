@@ -628,7 +628,7 @@ const vm_saika_outline = avalon.define({
     footer_data:[],
     loading:false,
     tableBorder:true,//带边框表格
-    list: avalon.range(10).map(n => ({
+    list: avalon.range(9).map(n => ({
         id: n, name: '老狼' + n, address: '深山', province: '老林',date:'1514895537781',status:1,statusTitle:'在线'
     })),
      fetch(params = {}) {
