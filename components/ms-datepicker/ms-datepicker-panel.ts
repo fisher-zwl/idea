@@ -136,6 +136,11 @@ export default function (cmpVm) {
                 target: { value: cmpVm.selected },
                 type: 'datepicker-changed'
             });
+        },
+        handleDbclick(){
+            if(this.showTime){
+                this.complete();
+            }
         }
     });
 }

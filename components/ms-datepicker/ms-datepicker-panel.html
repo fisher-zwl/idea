@@ -56,7 +56,7 @@
         </span>
     </div>
     <div class="ane-datepicker-panel-body" :visible="@viewMode === 0">
-        <ms-calendar :widget="{value:@currentDateArray,showHeader:false,disabledDate:@disabledDate,onChange:@handleCalendarChange}"></ms-calendar>
+        <ms-calendar :widget="{value:@currentDateArray,showHeader:false,disabledDate:@disabledDate,onChange:@handleCalendarChange,onDbclick:@handleDbclick}"></ms-calendar>
     </div>
     <div class="ane-datepicker-panel-body" :visible="@viewMode > 0">
         <ms-calendar-year-view :widget="{currentMonth:@currentMonth,currentYear:@currentYear,view:@viewMode,onSelect:@handleYearViewSelect}"></ms-calendar-year-view>
